@@ -48,8 +48,8 @@ func _enter_tree():
 	_define_project_setting(
 			"chief_mint/info/local_store_location",
 			TYPE_STRING,
-			PROPERTY_HINT_FILE,
-			"",
+			PROPERTY_HINT_PLACEHOLDER_TEXT,
+			"user://chiefmints.info",
 			"user://chiefmints.info")
 			
 	print("Chief Mint Plugin enabled")
