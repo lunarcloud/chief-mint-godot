@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "EditorPlugin",
+"class": "ChiefMintPlugin",
+"language": "GDScript",
+"path": "res://addons/chief_mint/plugin.gd"
+} ]
+_global_script_class_icons={
+"ChiefMintPlugin": "res://addons/chief_mint/icon/icon-small-grey.png"
+}
+
 [application]
 
 config/name="Chief Mint Godot"

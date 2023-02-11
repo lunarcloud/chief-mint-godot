@@ -1,6 +1,4 @@
-[gd_scene load_steps=2 format=2]
-
-[ext_resource path="res://addons/chief_mint/button.gd" type="Script" id=1]
+[gd_scene format=2]
 
 [node name="ChiefMintMainPanel" type="Panel"]
 anchor_right = 1.0
@@ -12,12 +10,3 @@ margin_top = 99.0
 margin_right = 275.0
 margin_bottom = 171.0
 text = "Test"
-
-[node name="Button" type="Button" parent="."]
-margin_left = 276.0
-margin_top = 161.0
-margin_right = 491.0
-margin_bottom = 247.0
-script = ExtResource( 1 )
-
-[connection signal="pressed" from="Button" to="Button" method="_on_Button_pressed"]

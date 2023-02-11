@@ -1,6 +1,8 @@
 tool
+class_name ChiefMintPlugin, "res://addons/chief_mint/icon/icon-small-grey.png"
 extends EditorPlugin
 
+const Icon = preload("res://addons/chief_mint/icon/icon-small-grey.png")
 const MainPanel = preload("res://addons/chief_mint/plugin_main_panel.tscn")
 
 var main_panel_instance
@@ -32,5 +34,5 @@ func get_plugin_name():
 	return "ChiefMint"
 
 
-func get_plugin_icon():
-	return get_editor_interface().get_base_control().get_icon("Node", "EditorIcons")
+func get_plugin_icon() -> Texture:
+	return Icon
