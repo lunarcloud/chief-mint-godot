@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/chief_mint/editor/definition_row.gd" type="Script" id=1]
-[ext_resource path="res://addons/chief_mint/resources/chief_mint_definition_resource.gd" type="Script" id=2]
+[ext_resource path="res://addons/chief_mint/resources/chief_mint_definition.gd" type="Script" id=2]
 
 [sub_resource type="Resource" id=1]
 resource_name = "Chief Mint Definition Resource"
@@ -10,103 +10,136 @@ name = ""
 maximum_progress = 0
 display_partial_progress = false
 
+[sub_resource type="ImageTexture" id=2]
+
 [node name="ChiefMintDefinitionRow" type="Panel"]
 anchor_right = 1.0
-anchor_bottom = 1.0
-size_flags_horizontal = 11
-size_flags_vertical = 11
+margin_bottom = 320.0
+rect_min_size = Vector2( 240, 320 )
+size_flags_horizontal = 3
 script = ExtResource( 1 )
 definition = SubResource( 1 )
 
-[node name="Vbox" type="HBoxContainer" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 6.0
+margin_top = 6.0
+margin_right = -6.0
+margin_bottom = -6.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+color = Color( 0, 0, 0, 0.117647 )
 
-[node name="Panel" type="Panel" parent="Vbox"]
-margin_right = 510.0
-margin_bottom = 600.0
-rect_min_size = Vector2( 200, 60 )
-size_flags_horizontal = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Vbox/Panel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 6.0
+margin_top = 6.0
+margin_right = -6.0
+margin_bottom = -6.0
+rect_min_size = Vector2( 440, 320 )
+size_flags_horizontal = 3
+size_flags_vertical = 11
+custom_constants/separation = 8
+
+[node name="IconContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_right = 256.0
+margin_bottom = 320.0
+rect_min_size = Vector2( 256, 320 )
+
+[node name="ImageDisplay" type="ColorRect" parent="HBoxContainer/IconContainer"]
+margin_right = 256.0
+margin_bottom = 256.0
+rect_min_size = Vector2( 256, 256 )
+color = Color( 0, 0, 0, 1 )
+
+[node name="ImageTexture" type="TextureRect" parent="HBoxContainer/IconContainer/ImageDisplay"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 128, 128 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
+texture = SubResource( 2 )
+stretch_mode = 6
 
-[node name="Spacer" type="Control" parent="Vbox/Panel/VBoxContainer"]
-margin_right = 510.0
+[node name="Button" type="Button" parent="HBoxContainer/IconContainer"]
+margin_top = 260.0
+margin_right = 256.0
+margin_bottom = 280.0
+text = "Set Image"
+
+[node name="InfoContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 264.0
+margin_right = 1012.0
+margin_bottom = 320.0
+rect_min_size = Vector2( 120, 320 )
+size_flags_horizontal = 3
+
+[node name="ButtonSpacer" type="HBoxContainer" parent="HBoxContainer/InfoContainer"]
+margin_right = 748.0
 margin_bottom = 26.0
 rect_min_size = Vector2( 26, 26 )
 size_flags_horizontal = 3
 size_flags_vertical = 0
+alignment = 2
 
-[node name="Label" type="Label" parent="Vbox/Panel/VBoxContainer"]
+[node name="SubtractButton" type="Button" parent="HBoxContainer/InfoContainer/ButtonSpacer"]
+margin_left = 687.0
+margin_right = 748.0
+margin_bottom = 20.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "remove"
+
+[node name="NameLabel" type="Label" parent="HBoxContainer/InfoContainer"]
 margin_top = 30.0
-margin_right = 510.0
+margin_right = 748.0
 margin_bottom = 44.0
 text = "Name"
 
-[node name="LineEdit" type="LineEdit" parent="Vbox/Panel/VBoxContainer"]
+[node name="NameEdit" type="LineEdit" parent="HBoxContainer/InfoContainer"]
 margin_top = 48.0
-margin_right = 510.0
+margin_right = 748.0
 margin_bottom = 72.0
 
-[node name="Panel2" type="Panel" parent="Vbox"]
-margin_left = 514.0
-margin_right = 1024.0
-margin_bottom = 600.0
-rect_min_size = Vector2( 200, 140 )
-size_flags_horizontal = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Vbox/Panel2"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="ButtonSpacer" type="Control" parent="Vbox/Panel2/VBoxContainer"]
-margin_right = 510.0
-margin_bottom = 26.0
-rect_min_size = Vector2( 26, 26 )
-size_flags_horizontal = 3
-size_flags_vertical = 0
-
-[node name="SubtractButton" type="Button" parent="Vbox/Panel2/VBoxContainer/ButtonSpacer"]
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -26.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-text = "-"
-
-[node name="MaxProgressLabel" type="Label" parent="Vbox/Panel2/VBoxContainer"]
-margin_top = 30.0
-margin_right = 510.0
-margin_bottom = 44.0
+[node name="MaxProgressLabel" type="Label" parent="HBoxContainer/InfoContainer"]
+margin_top = 76.0
+margin_right = 748.0
+margin_bottom = 90.0
 text = "Max Progress"
 
-[node name="MaxProgressLineEdit" type="LineEdit" parent="Vbox/Panel2/VBoxContainer"]
-margin_top = 48.0
-margin_right = 510.0
-margin_bottom = 72.0
+[node name="MaxProgressSpinBox" type="SpinBox" parent="HBoxContainer/InfoContainer"]
+margin_top = 94.0
+margin_right = 748.0
+margin_bottom = 118.0
+min_value = 1.0
+max_value = 255.0
+value = 1.0
+align = 2
 
-[node name="DescriptionLabel" type="Label" parent="Vbox/Panel2/VBoxContainer"]
-margin_top = 76.0
-margin_right = 510.0
-margin_bottom = 90.0
+[node name="DescriptionLabel" type="Label" parent="HBoxContainer/InfoContainer"]
+margin_top = 122.0
+margin_right = 748.0
+margin_bottom = 136.0
 text = "Description"
 
-[node name="DescriptionTextEdit" type="TextEdit" parent="Vbox/Panel2/VBoxContainer"]
-margin_top = 94.0
-margin_right = 510.0
-margin_bottom = 94.0
+[node name="DescriptionTextEdit" type="TextEdit" parent="HBoxContainer/InfoContainer"]
+margin_top = 140.0
+margin_right = 748.0
+margin_bottom = 260.0
+rect_min_size = Vector2( 240, 120 )
+size_flags_horizontal = 3
 
-[node name="PartialProgressCheckBox" type="CheckBox" parent="Vbox/Panel2/VBoxContainer"]
-margin_top = 98.0
-margin_right = 510.0
-margin_bottom = 122.0
+[node name="PartialProgressCheckBox" type="CheckBox" parent="HBoxContainer/InfoContainer"]
+margin_top = 264.0
+margin_right = 748.0
+margin_bottom = 288.0
 text = "Show Partial Progress"
+
+[node name="ImageFileDialog" type="FileDialog" parent="."]
+margin_right = 316.0
+margin_bottom = 149.0
+rect_min_size = Vector2( 300, 105 )
+
+[connection signal="pressed" from="HBoxContainer/InfoContainer/ButtonSpacer/SubtractButton" to="." method="_on_SubtractButton_pressed"]

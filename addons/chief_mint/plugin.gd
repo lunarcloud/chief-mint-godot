@@ -8,6 +8,28 @@ const MainPanel = preload("res://addons/chief_mint/editor/plugin_main_panel.tscn
 var main_panel_instance
 
 
+func _define_project_setting(
+		p_name : String,
+		p_type : int,
+		p_hint : int = PROPERTY_HINT_NONE,
+		p_hint_string : String = "",
+		p_default_val = "") -> void:
+	# p_default_val can be any type!!
+
+	if !ProjectSettings.has_setting(p_name):
+		ProjectSettings.set_setting(p_name, p_default_val)
+
+	var property_info : Dictionary = {
+		"name" : p_name,
+		"type" : p_type,
+		"hint" : p_hint,
+		"hint_string" : p_hint_string
+	}
+
+	ProjectSettings.add_property_info(property_info)
+	ProjectSettings.set_initial_value(p_name, p_default_val)
+
+
 func _enter_tree():
 	main_panel_instance = MainPanel.instance()
 	# Add the main panel to the editor's main viewport.
@@ -15,8 +37,22 @@ func _enter_tree():
 	# Hide the main panel. Very much required.
 	make_visible(false)
 	
+	# Allow UI components to adjust accordingly with editor scaling
+	var scale = get_editor_interface().get_editor_scale()
+	main_panel_instance.set_editor_scale(scale) 
+	
 	# Registers the ChiefMint node as an autoloaded singleton.
 	add_autoload_singleton("ChiefMint", "res://addons/chief_mint/chief_mint_singleton.gd")
+	
+	# Add input grip threshold to the project settings
+	_define_project_setting(
+			"chief_mint/info/local_store_location",
+			TYPE_STRING,
+			PROPERTY_HINT_FILE,
+			"",
+			"user://chiefmints.info")
+			
+	print("Chief Mint Plugin enabled")
 
 
 func _exit_tree():
@@ -25,6 +61,8 @@ func _exit_tree():
 	
 	if main_panel_instance:
 		main_panel_instance.queue_free()
+		
+	print("Chief Mint Plugin disabled")
 
 
 func has_main_screen():

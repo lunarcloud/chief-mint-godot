@@ -12,7 +12,12 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "ChiefMintDefinitionResource",
 "language": "GDScript",
-"path": "res://addons/chief_mint/resources/chief_mint_definition_resource.gd"
+"path": "res://addons/chief_mint/resources/chief_mint_definition.gd"
+}, {
+"base": "Resource",
+"class": "ChiefMintDefinitionsResource",
+"language": "GDScript",
+"path": "res://addons/chief_mint/resources/chief_mint_definitions_resource.gd"
 }, {
 "base": "Panel",
 "class": "ChiefMintEditorDefinitionRow",
@@ -36,6 +41,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "ChiefMintDefinitionResource": "res://addons/chief_mint/icon/icon.svg",
+"ChiefMintDefinitionsResource": "res://addons/chief_mint/icon/icon.svg",
 "ChiefMintEditorDefinitionRow": "res://addons/chief_mint/icon/icon.svg",
 "ChiefMintPlugin": "res://addons/chief_mint/icon/icon-small-grey.png",
 "ChiefMintProgress": "res://addons/chief_mint/icon/icon.svg",
@@ -45,6 +51,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Chief Mint Plugin Demo"
+run/main_scene="res://addons/chief_mint/editor/plugin_main_panel.tscn"
 config/icon="res://icon.png"
 
 [autoload]
