@@ -9,19 +9,47 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Resource",
+"class": "ChiefMintDefinitionResource",
+"language": "GDScript",
+"path": "res://addons/chief_mint/resources/chief_mint_definition_resource.gd"
+}, {
+"base": "Panel",
+"class": "ChiefMintEditorDefinitionRow",
+"language": "GDScript",
+"path": "res://addons/chief_mint/editor/definition_row.gd"
+}, {
 "base": "EditorPlugin",
 "class": "ChiefMintPlugin",
 "language": "GDScript",
 "path": "res://addons/chief_mint/plugin.gd"
+}, {
+"base": "Object",
+"class": "ChiefMintProgress",
+"language": "GDScript",
+"path": "res://addons/chief_mint/resources/chief_mint_progress.gd"
+}, {
+"base": "Resource",
+"class": "ChiefMintResource",
+"language": "GDScript",
+"path": "res://addons/chief_mint/resources/chief_mint_resource.gd"
 } ]
 _global_script_class_icons={
-"ChiefMintPlugin": "res://addons/chief_mint/icon/icon-small-grey.png"
+"ChiefMintDefinitionResource": "res://addons/chief_mint/icon/icon.svg",
+"ChiefMintEditorDefinitionRow": "res://addons/chief_mint/icon/icon.svg",
+"ChiefMintPlugin": "res://addons/chief_mint/icon/icon-small-grey.png",
+"ChiefMintProgress": "res://addons/chief_mint/icon/icon.svg",
+"ChiefMintResource": "res://addons/chief_mint/icon/icon.svg"
 }
 
 [application]
 
-config/name="Chief Mint Godot"
+config/name="Chief Mint Plugin Demo"
 config/icon="res://icon.png"
+
+[autoload]
+
+ChiefMint="*res://addons/chief_mint/chief_mint_singleton.gd"
 
 [editor_plugins]
 
