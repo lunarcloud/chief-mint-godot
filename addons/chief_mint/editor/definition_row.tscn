@@ -63,7 +63,7 @@ size_flags_vertical = 3
 texture = SubResource( 2 )
 stretch_mode = 6
 
-[node name="Button" type="Button" parent="HBoxContainer/IconContainer"]
+[node name="ImageChangeButton" type="Button" parent="HBoxContainer/IconContainer"]
 margin_top = 260.0
 margin_right = 256.0
 margin_bottom = 280.0
@@ -142,4 +142,9 @@ margin_right = 316.0
 margin_bottom = 149.0
 rect_min_size = Vector2( 300, 105 )
 
+[connection signal="pressed" from="HBoxContainer/IconContainer/ImageChangeButton" to="." method="_on_ImageChangeButton_pressed"]
 [connection signal="pressed" from="HBoxContainer/InfoContainer/ButtonSpacer/SubtractButton" to="." method="_on_SubtractButton_pressed"]
+[connection signal="text_changed" from="HBoxContainer/InfoContainer/NameEdit" to="." method="_on_NameEdit_text_changed"]
+[connection signal="value_changed" from="HBoxContainer/InfoContainer/MaxProgressSpinBox" to="." method="_on_MaxProgressSpinBox_value_changed"]
+[connection signal="text_changed" from="HBoxContainer/InfoContainer/DescriptionTextEdit" to="." method="_on_DescriptionTextEdit_text_changed"]
+[connection signal="toggled" from="HBoxContainer/InfoContainer/PartialProgressCheckBox" to="." method="_on_PartialProgressCheckBox_toggled"]

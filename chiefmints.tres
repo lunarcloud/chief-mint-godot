@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://addons/chief_mint/resources/chief_mint_definition.gd" type="Script" id=1]
+[ext_resource path="res://addons/chief_mint/resources/chief_mint_definitions_resource.gd" type="Script" id=2]
+
+[sub_resource type="Resource" id=1]
+resource_name = "Chief Mint Definition Resource"
+script = ExtResource( 1 )
+name = "test1"
+maximum_progress = 11
+display_partial_progress = true
+
+[resource]
+resource_name = "Chief Mint Definitions Resource"
+script = ExtResource( 2 )
+definitions = [ SubResource( 1 ) ]

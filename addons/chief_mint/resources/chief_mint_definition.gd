@@ -2,8 +2,8 @@ class_name ChiefMintDefinitionResource, "res://addons/chief_mint/icon/icon.svg"
 extends Resource
 
 export var name: String
-export var maximum_progress: int
-export var display_partial_progress: bool
+export(int, 1, 255, 1) var maximum_progress: int
+export var display_partial_progress: bool = true
 
 func _init():
 	self.resource_name = "Chief Mint Definition Resource"

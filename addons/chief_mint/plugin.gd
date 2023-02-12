@@ -31,6 +31,25 @@ func _define_project_setting(
 
 
 func _enter_tree():
+	# Add Main Definitions File to the project settings
+	_define_project_setting(
+			"chief_mint/editor/definitions",
+			TYPE_STRING,
+			PROPERTY_HINT_FILE,
+			"*.mints",
+			"res://chiefmints.tres")
+			
+	# Add Local Storage path to the project settings
+	_define_project_setting(
+			"chief_mint/local_storage/save_location",
+			TYPE_STRING,
+			PROPERTY_HINT_PLACEHOLDER_TEXT,
+			"user://chiefmints.info",
+			"user://chiefmints.info")
+	
+	# Registers the ChiefMint node as an autoloaded singleton.
+	add_autoload_singleton("ChiefMint", "res://addons/chief_mint/chief_mint_singleton.gd")
+	
 	main_panel_instance = MainPanel.instance()
 	# Add the main panel to the editor's main viewport.
 	get_editor_interface().get_editor_viewport().add_child(main_panel_instance)
@@ -41,17 +60,9 @@ func _enter_tree():
 	var scale = get_editor_interface().get_editor_scale()
 	main_panel_instance.set_editor_scale(scale) 
 	
-	# Registers the ChiefMint node as an autoloaded singleton.
-	add_autoload_singleton("ChiefMint", "res://addons/chief_mint/chief_mint_singleton.gd")
+	# Update the main panel's data
+	main_panel_instance.reload_from_file()
 	
-	# Add input grip threshold to the project settings
-	_define_project_setting(
-			"chief_mint/info/local_store_location",
-			TYPE_STRING,
-			PROPERTY_HINT_PLACEHOLDER_TEXT,
-			"user://chiefmints.info",
-			"user://chiefmints.info")
-			
 	print("Chief Mint Plugin enabled")
 
 

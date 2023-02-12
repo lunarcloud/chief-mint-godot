@@ -11,11 +11,21 @@ var editor_scale := 1.0 setget set_editor_scale # set once by the plugin
 
 var definitions: ChiefMintDefinitionsResource
 
-func _ready():
-	definitions = ChiefMintDefinitionsResource.new()
+
+func reload_from_file():
 	for node in rows.get_children():
-		if 'definition' in node and node.definition is ChiefMintDefinitionResource:
-			definitions.definitions.append(node.definition)
+		node.queue_free()
+	
+	var loadPath = ProjectSettings.get_setting("chief_mint/editor/definitions")
+	if loadPath == null or not ResourceLoader.exists(loadPath):
+		definitions = null
+		return
+	
+	definitions = load(loadPath)
+		
+	for def in definitions.definitions:
+		var new_row = create_row()
+		new_row.set_definition(def)
 
 
 func set_editor_scale(value: float) -> void:
@@ -28,20 +38,39 @@ func set_editor_scale(value: float) -> void:
 
 func get_definitions() -> ChiefMintDefinitionsResource:
 	var out := ChiefMintDefinitionsResource.new()
+	
+	var names_seen := []
+	
 	for node in rows.get_children():
-		if 'definition' in node and node.definition is ChiefMintDefinitionResource:
+		if 'definition' in node \
+		and node.definition is ChiefMintDefinitionResource \
+		and node.definition.name != "" \
+		and not names_seen.has(node.definition.name):
+			names_seen.append(node.definition.name)
 			out.definitions.append(node.definition)
+	
 	return out
 
 
 func _on_AddButton_pressed():
+	create_row()
+
+
+func create_row():
 	var new_row := Row.instance()
 	new_row.definition = ChiefMintDefinitionResource.new()
 	new_row.set_editor_scale(editor_scale)
 	rows.add_child(new_row)
 	new_row.owner = self
+	return new_row
 	
 
-
 func _on_SaveButton_pressed():
-	pass # Replace with function body.
+	definitions = get_definitions()
+	var savePath = ProjectSettings.get_setting("chief_mint/editor/definitions")
+	print("Trying to save {f}".format({'f': savePath}))
+	var err = ResourceSaver.save(savePath, definitions)
+	if err == OK:
+		print("Saved")
+	else:
+		printerr("OH NO!")
