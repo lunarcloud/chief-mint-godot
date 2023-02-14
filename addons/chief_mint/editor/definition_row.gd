@@ -41,7 +41,7 @@ func set_editor_scale(value: float) -> void:
 
 func _on_SubtractButton_pressed():
 	emit_signal("definition_removed", definition)
-	queue_free()
+	call_deferred("queue_free")
 
 
 func set_definition(def: ChiefMintDefinitionResource) -> void:
@@ -74,6 +74,7 @@ func set_definition(def: ChiefMintDefinitionResource) -> void:
 			$HBoxContainer/InfoContainer/DescriptionLabel.visible = false
 			description_text_edit.visible = false
 			partial_progress_check_box.visible = false
+			$HBoxContainer/InfoContainer/TopRightArea/SubtractButton.visible = false
 
 
 func _on_NameEdit_text_changed(new_text):

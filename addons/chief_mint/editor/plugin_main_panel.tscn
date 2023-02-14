@@ -17,16 +17,22 @@ border_blend = true
 [sub_resource type="Resource" id=8]
 resource_name = "Chief Mint Definition Resource"
 script = ExtResource( 3 )
-name = "test2"
+name = "Completion"
+description = ""
+icon_path = ""
 maximum_progress = 0
-display_partial_progress = true
+display_partial_progress = false
+rarity = 3
 
 [sub_resource type="Resource" id=9]
 resource_name = "Chief Mint Definition Resource"
 script = ExtResource( 3 )
 name = "test3"
+description = ""
+icon_path = ""
 maximum_progress = 0
 display_partial_progress = true
+rarity = 0
 
 [node name="ChiefMintMainPanel" type="Panel"]
 anchor_right = 1.0

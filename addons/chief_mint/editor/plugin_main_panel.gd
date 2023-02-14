@@ -18,14 +18,39 @@ func reload_from_file():
 	
 	var loadPath = ProjectSettings.get_setting("chief_mint/editor/definitions")
 	if loadPath == null or not ResourceLoader.exists(loadPath):
-		definitions = null
-		return
+		definitions = ChiefMintDefinitionsResource.new()
+	else:
+		definitions = load(loadPath)
 	
-	definitions = load(loadPath)
-		
+	var has_completion_mint := false
+	
+	# Create rows for every definition, checking that there is only one completion rarity
 	for def in definitions.definitions:
+		var this_is_completion : bool = def.rarity == ChiefMintDefinitionResource.ChiefMintRarity.Completion
+		
+		if this_is_completion and has_completion_mint:
+			def.rarity = ChiefMintDefinitionResource.ChiefMintRarity.Common
+		if this_is_completion:
+			has_completion_mint = true
+			
 		var new_row = create_row()
 		new_row.set_definition(def)
+	
+	# Add a mint at the top if no mints exist
+	if definitions.definitions.size() == 0 \
+		or definitions.definitions.size() == 1 and definitions.definitions[0].rarity == ChiefMintDefinitionResource.ChiefMintRarity.Completion:
+		create_tbd_def()
+		
+	# Add a completion mint at the top if no completion mints exist
+	if not has_completion_mint:
+		var completion := ChiefMintDefinitionResource.new()
+		completion.name = "Completion"
+		completion.rarity = ChiefMintDefinitionResource.ChiefMintRarity.Completion
+		definitions.definitions.insert(0, completion)
+		
+		var new_row = create_row()
+		new_row.set_definition(completion)
+		rows.move_child(new_row, 0)
 
 
 func set_editor_theme(value: Theme, node = self) -> void:
@@ -73,12 +98,23 @@ func _on_AddButton_pressed():
 	create_row()
 
 
+func create_tbd_def() -> void:
+	var def := ChiefMintDefinitionResource.new()
+	def.name = "TBD"
+	definitions.definitions.append(def)
+	
+	var new_row = create_row()
+	new_row.set_definition(def)
+
+
 func create_row():
 	var new_row := Row.instance()
 	new_row.definition = ChiefMintDefinitionResource.new()
 	new_row.set_editor_scale(editor_scale)
 	rows.add_child(new_row)
 	new_row.owner = self
+	new_row.connect("definition_removed", self, "_on_def_removed")
+	#new_row.connect("definition_changed", self, "_on_def_changed")
 	return new_row
 	
 
@@ -91,3 +127,10 @@ func _on_SaveButton_pressed():
 		print("Saved")
 	else:
 		printerr("OH NO!")
+
+
+func _on_def_removed(definition: ChiefMintDefinitionResource) -> void:
+	# two rows implies only a completion row and this one being deleted
+	if rows.get_child_count() <= 2:
+		create_tbd_def()
+
