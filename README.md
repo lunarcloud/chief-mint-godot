@@ -1,4 +1,4 @@
-# Chief Mint: Godot Plugin for Acheivements
+# Chief Mint: Godot 3 Plugin for Acheivements
 
 WORK IN PROGRESS - DO NOT USE, IT ISNT FINISHED
 
