@@ -67,8 +67,10 @@ func set_definition(def: ChiefMintDefinitionResource) -> void:
 	if is_instance_valid(rarity_completion) and is_instance_valid(rarity_options):
 		rarity_completion.visible = def.rarity == ChiefMintDefinitionResource.ChiefMintRarity.Completion
 		rarity_options.visible = not rarity_completion.visible
-		rarity_options.select(def.rarity)
-		if rarity_completion.visible:
+		
+		if def.rarity < ChiefMintDefinitionResource.ChiefMintRarity.Completion:
+			rarity_options.select(def.rarity)
+		else:
 			$HBoxContainer/InfoContainer/MaxProgressLabel.visible = false
 			max_progress_spin_box.visible = false
 			$HBoxContainer/InfoContainer/DescriptionLabel.visible = false
