@@ -24,6 +24,7 @@ func _enter_tree():
 	description_text_edit = $HBoxContainer/InfoContainer/DescriptionTextEdit
 	partial_progress_check_box = $HBoxContainer/InfoContainer/PartialProgressCheckBox
 
+
 func set_editor_scale(value: float) -> void:
 	rect_min_size = rect_min_size * value
 
@@ -44,6 +45,7 @@ func set_definition(def: ChiefMintDefinitionResource) -> void:
 	if is_instance_valid(partial_progress_check_box):
 		partial_progress_check_box.pressed = def.display_partial_progress
 
+
 func _on_NameEdit_text_changed(new_text):
 	definition.name = new_text
 
@@ -61,4 +63,8 @@ func _on_DescriptionTextEdit_text_changed():
 
 
 func _on_ImageChangeButton_pressed():
+	pass # Replace with function body.
+
+
+func _on_ImageFileDialog_file_selected(path):
 	pass # Replace with function body.

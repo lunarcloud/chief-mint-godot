@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://addons/chief_mint/editor/definition_row.gd" type="Script" id=1]
 [ext_resource path="res://addons/chief_mint/resources/chief_mint_definition.gd" type="Script" id=2]
+[ext_resource path="res://addons/chief_mint/editor/theme_icon_button.gd" type="Script" id=3]
+[ext_resource path="res://addons/chief_mint/icon/button-icons/Remove.svg" type="Texture" id=4]
 
 [sub_resource type="Resource" id=1]
 resource_name = "Chief Mint Definition Resource"
@@ -85,12 +87,15 @@ size_flags_vertical = 0
 alignment = 2
 
 [node name="SubtractButton" type="Button" parent="HBoxContainer/InfoContainer/ButtonSpacer"]
-margin_left = 687.0
+margin_left = 720.0
 margin_right = 748.0
-margin_bottom = 20.0
+margin_bottom = 22.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-text = "remove"
+icon = ExtResource( 4 )
+icon_align = 1
+script = ExtResource( 3 )
+editor_theme_icon = "Remove"
 
 [node name="NameLabel" type="Label" parent="HBoxContainer/InfoContainer"]
 margin_top = 30.0
@@ -138,9 +143,15 @@ margin_bottom = 288.0
 text = "Show Partial Progress"
 
 [node name="ImageFileDialog" type="FileDialog" parent="."]
-margin_right = 316.0
-margin_bottom = 149.0
+margin_left = 254.0
+margin_top = 28.0
+margin_right = 786.0
+margin_bottom = 300.0
 rect_min_size = Vector2( 300, 105 )
+window_title = "Open a File"
+resizable = true
+mode = 0
+filters = PoolStringArray( "png", "svg" )
 
 [connection signal="pressed" from="HBoxContainer/IconContainer/ImageChangeButton" to="." method="_on_ImageChangeButton_pressed"]
 [connection signal="pressed" from="HBoxContainer/InfoContainer/ButtonSpacer/SubtractButton" to="." method="_on_SubtractButton_pressed"]
@@ -148,3 +159,4 @@ rect_min_size = Vector2( 300, 105 )
 [connection signal="value_changed" from="HBoxContainer/InfoContainer/MaxProgressSpinBox" to="." method="_on_MaxProgressSpinBox_value_changed"]
 [connection signal="text_changed" from="HBoxContainer/InfoContainer/DescriptionTextEdit" to="." method="_on_DescriptionTextEdit_text_changed"]
 [connection signal="toggled" from="HBoxContainer/InfoContainer/PartialProgressCheckBox" to="." method="_on_PartialProgressCheckBox_toggled"]
+[connection signal="file_selected" from="ImageFileDialog" to="." method="_on_ImageFileDialog_file_selected"]

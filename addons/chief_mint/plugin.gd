@@ -58,7 +58,11 @@ func _enter_tree():
 	
 	# Allow UI components to adjust accordingly with editor scaling
 	var scale = get_editor_interface().get_editor_scale()
-	main_panel_instance.set_editor_scale(scale) 
+	main_panel_instance.set_editor_scale(scale)
+	
+	# Allow UI to use the editor theme
+	var theme = get_editor_interface().get_base_control().theme 
+	main_panel_instance.set_editor_theme(theme)
 	
 	# Update the main panel's data
 	main_panel_instance.reload_from_file()

@@ -28,6 +28,23 @@ func reload_from_file():
 		new_row.set_definition(def)
 
 
+func set_editor_theme(value: Theme, node = self) -> void:
+	for c in node.get_children():
+		#if c.has_method("set_editor_theme"):
+		#	c.set_editor_theme(value, c)
+		#elif 'editor_theme_icon' in c:
+		if 'editor_theme_icon' in c:
+			if not value.has_icon(c.editor_theme_icon, "EditorIcons"):
+				printerr("Icon not found {theme_icon}".format({'theme_icon': c.editor_theme_icon}))
+				continue
+			var icon := value.get_icon(c.editor_theme_icon, "EditorIcons")
+			c.icon = icon
+			c.text = ""
+			c.icon_align = Button.ALIGN_CENTER
+		else:
+			self.set_editor_theme(value, c)
+	
+
 func set_editor_scale(value: float) -> void:
 	editor_scale = value
 	panel.rect_min_size.y *= value
