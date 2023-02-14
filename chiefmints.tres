@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=6 format=2]
 
 [ext_resource path="res://addons/chief_mint/resources/chief_mint_definition.gd" type="Script" id=1]
 [ext_resource path="res://addons/chief_mint/resources/chief_mint_definitions_resource.gd" type="Script" id=2]
@@ -6,11 +6,35 @@
 [sub_resource type="Resource" id=1]
 resource_name = "Chief Mint Definition Resource"
 script = ExtResource( 1 )
-name = "test1"
-maximum_progress = 11
+name = "Master of All"
+description = ""
+icon_path = ""
+maximum_progress = 0
 display_partial_progress = true
+rarity = 3
+
+[sub_resource type="Resource" id=2]
+resource_name = "Chief Mint Definition Resource"
+script = ExtResource( 1 )
+name = "test 2"
+description = ""
+icon_path = ""
+maximum_progress = 0
+display_partial_progress = true
+rarity = 0
+
+[sub_resource type="Resource" id=3]
+resource_name = "Chief Mint Definition Resource"
+script = ExtResource( 1 )
+name = "test1"
+description = "aoeu 
+aoeu"
+icon_path = "res://icon.png"
+maximum_progress = 0
+display_partial_progress = true
+rarity = 0
 
 [resource]
 resource_name = "Chief Mint Definitions Resource"
 script = ExtResource( 2 )
-definitions = [ SubResource( 1 ) ]
+definitions = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ) ]
