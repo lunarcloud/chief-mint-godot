@@ -4,13 +4,13 @@ extends Panel
 
 export(Resource) var definition setget set_definition
 
-var name_edit
-var max_progress_spin_box
-var description_text_edit
-var partial_progress_check_box
+var name_edit : LineEdit
+var max_progress_spin_box : SpinBox
+var description_text_edit : TextEdit
+var partial_progress_check_box : CheckBox
 var rarity_options: OptionButton
-var rarity_completion
-var icon_display
+var rarity_completion : TextureRect
+var icon_display : TextureRect
 
 signal definition_changed(definition)
 
@@ -92,7 +92,7 @@ func _on_PartialProgressCheckBox_toggled(button_pressed):
 
 
 func _on_DescriptionTextEdit_text_changed():
-	pass # Replace with function body.
+	definition.description = description_text_edit.text
 
 
 func _on_ImageChangeButton_pressed():
@@ -104,3 +104,7 @@ func _on_ImageFileDialog_file_selected(path):
 		return
 	definition.icon_path = path
 	icon_display.texture = load(path)
+
+
+func _on_rarity_selected(index):
+	definition.rarity = index

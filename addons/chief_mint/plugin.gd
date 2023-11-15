@@ -76,7 +76,7 @@ func _exit_tree():
 	
 	if main_panel_instance:
 		main_panel_instance.queue_free()
-		
+	
 	print("Chief Mint Plugin disabled")
 
 

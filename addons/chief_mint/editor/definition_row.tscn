@@ -190,6 +190,7 @@ mode = 0
 filters = PoolStringArray( "*.png", "*.svg" )
 
 [connection signal="pressed" from="HBoxContainer/IconContainer/ImageChangeButton" to="." method="_on_ImageChangeButton_pressed"]
+[connection signal="item_selected" from="HBoxContainer/InfoContainer/TopRightArea/RarityOptions" to="." method="_on_rarity_selected"]
 [connection signal="pressed" from="HBoxContainer/InfoContainer/TopRightArea/SubtractButton" to="." method="_on_SubtractButton_pressed"]
 [connection signal="text_changed" from="HBoxContainer/InfoContainer/NameEdit" to="." method="_on_NameEdit_text_changed"]
 [connection signal="value_changed" from="HBoxContainer/InfoContainer/MaxProgressSpinBox" to="." method="_on_MaxProgressSpinBox_value_changed"]
