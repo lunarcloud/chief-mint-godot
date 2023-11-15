@@ -60,7 +60,7 @@ ChiefMint="*res://addons/chief_mint/chief_mint_singleton.gd"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/chief_mint/plugin.cfg", "res://addons/editor_icon_previewer/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/chief_mint/plugin.cfg" )
 
 [gui]
 

@@ -9,14 +9,14 @@
 [ext_resource path="res://addons/chief_mint/icon/rarity/completion.png" type="Texture" id=7]
 [ext_resource path="res://addons/chief_mint/icon/rarity/rare.png" type="Texture" id=8]
 
-[sub_resource type="Resource" id=1]
+[sub_resource type="Resource" id=3]
 resource_name = "Chief Mint Definition Resource"
 script = ExtResource( 2 )
 name = ""
 description = ""
 icon_path = ""
-maximum_progress = 0
-display_partial_progress = false
+maximum_progress = 1
+display_partial_progress = true
 rarity = 0
 
 [sub_resource type="ImageTexture" id=2]
@@ -27,7 +27,7 @@ margin_bottom = 320.0
 rect_min_size = Vector2( 240, 320 )
 size_flags_horizontal = 3
 script = ExtResource( 1 )
-definition = SubResource( 1 )
+definition = SubResource( 3 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -72,11 +72,22 @@ size_flags_vertical = 3
 texture = SubResource( 2 )
 stretch_mode = 6
 
-[node name="ImageChangeButton" type="Button" parent="HBoxContainer/IconContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/IconContainer"]
 margin_top = 260.0
 margin_right = 256.0
 margin_bottom = 280.0
+
+[node name="ImageChangeButton" type="Button" parent="HBoxContainer/IconContainer/HBoxContainer"]
+margin_right = 208.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
 text = "Set Image"
+
+[node name="ImageClearButton" type="Button" parent="HBoxContainer/IconContainer/HBoxContainer"]
+margin_left = 212.0
+margin_right = 256.0
+margin_bottom = 20.0
+text = "Clear"
 
 [node name="InfoContainer" type="VBoxContainer" parent="HBoxContainer"]
 margin_left = 264.0
@@ -114,8 +125,20 @@ expand_icon = true
 items = [ "", ExtResource( 5 ), false, 0, null, "", ExtResource( 6 ), false, 1, null, "", ExtResource( 8 ), false, 2, null ]
 selected = 0
 
-[node name="Control" type="Control" parent="HBoxContainer/InfoContainer/TopRightArea"]
+[node name="ChangesLabel" type="Label" parent="HBoxContainer/InfoContainer/TopRightArea"]
 margin_left = 56.0
+margin_right = 86.0
+margin_bottom = 42.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "*"
+align = 1
+valign = 1
+uppercase = true
+percent_visible = 0.0
+
+[node name="Control" type="Control" parent="HBoxContainer/InfoContainer/TopRightArea"]
+margin_left = 90.0
 margin_right = 696.0
 margin_bottom = 42.0
 size_flags_horizontal = 3
@@ -189,7 +212,8 @@ resizable = true
 mode = 0
 filters = PoolStringArray( "*.png", "*.svg" )
 
-[connection signal="pressed" from="HBoxContainer/IconContainer/ImageChangeButton" to="." method="_on_ImageChangeButton_pressed"]
+[connection signal="pressed" from="HBoxContainer/IconContainer/HBoxContainer/ImageChangeButton" to="." method="_on_ImageChangeButton_pressed"]
+[connection signal="pressed" from="HBoxContainer/IconContainer/HBoxContainer/ImageClearButton" to="." method="_on_ImageClearButton_pressed"]
 [connection signal="item_selected" from="HBoxContainer/InfoContainer/TopRightArea/RarityOptions" to="." method="_on_rarity_selected"]
 [connection signal="pressed" from="HBoxContainer/InfoContainer/TopRightArea/SubtractButton" to="." method="_on_SubtractButton_pressed"]
 [connection signal="text_changed" from="HBoxContainer/InfoContainer/NameEdit" to="." method="_on_NameEdit_text_changed"]

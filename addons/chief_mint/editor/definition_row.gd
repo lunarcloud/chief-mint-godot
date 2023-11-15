@@ -3,6 +3,7 @@ class_name ChiefMintEditorDefinitionRow, "res://addons/chief_mint/icon/icon.svg"
 extends Panel
 
 export(Resource) var definition setget set_definition
+var unedited : Resource
 
 var name_edit : LineEdit
 var max_progress_spin_box : SpinBox
@@ -11,8 +12,9 @@ var partial_progress_check_box : CheckBox
 var rarity_options: OptionButton
 var rarity_completion : TextureRect
 var icon_display : TextureRect
+var changes_label : Label
 
-signal definition_changed(definition)
+signal definition_changed(definition, has_changes)
 
 signal definition_removed(definition)
 
@@ -29,6 +31,7 @@ func _enter_tree():
 	rarity_options = $HBoxContainer/InfoContainer/TopRightArea/RarityOptions
 	rarity_completion = $HBoxContainer/InfoContainer/TopRightArea/CompletionRarity
 	icon_display = $HBoxContainer/IconContainer/ImageDisplay/ImageTexture
+	changes_label = $HBoxContainer/InfoContainer/TopRightArea/ChangesLabel
 
 
 func set_editor_scale(value: float) -> void:
@@ -45,9 +48,16 @@ func _on_SubtractButton_pressed():
 
 
 func set_definition(def: ChiefMintDefinitionResource) -> void:
-	definition = def
 	if def == null:
+		definition = null
+		unedited = null
 		return
+	
+	definition = def
+	unedited = definition.duplicate()
+	
+	if is_instance_valid(changes_label):
+		changes_label.visible_characters = 0
 	
 	if is_instance_valid(name_edit):
 		name_edit.text = def.name 
@@ -79,24 +89,48 @@ func set_definition(def: ChiefMintDefinitionResource) -> void:
 			$HBoxContainer/InfoContainer/TopRightArea/SubtractButton.visible = false
 
 
+func on_saved() -> void:
+	unedited = definition.duplicate()
+	changes_label.visible_characters = 0
+
+
+func _mark_changed() -> void:
+	var diffs = ChiefMintDefinitionResource.differences(unedited, definition)
+	var has_changes = diffs.size() > 0
+	
+	changes_label.visible_characters = 0 if not has_changes else 1
+	emit_signal("definition_changed", unedited, has_changes)
+	#print(str("editing result, diffs:", diffs))
+
+
 func _on_NameEdit_text_changed(new_text):
 	definition.name = new_text
+	_mark_changed()
 
 
 func _on_MaxProgressSpinBox_value_changed(value):
 	definition.maximum_progress = value
+	_mark_changed()
 
 
 func _on_PartialProgressCheckBox_toggled(button_pressed):
 	definition.display_partial_progress = button_pressed
+	_mark_changed()
 
 
 func _on_DescriptionTextEdit_text_changed():
 	definition.description = description_text_edit.text
+	_mark_changed()
 
 
 func _on_ImageChangeButton_pressed():
 	$ImageFileDialog.show_modal()
+	_mark_changed()
+
+
+func _on_ImageClearButton_pressed():
+	definition.icon_path = null
+	icon_display.texture = null
 
 
 func _on_ImageFileDialog_file_selected(path):
@@ -104,7 +138,10 @@ func _on_ImageFileDialog_file_selected(path):
 		return
 	definition.icon_path = path
 	icon_display.texture = load(path)
+	_mark_changed()
 
 
 func _on_rarity_selected(index):
 	definition.rarity = index
+	_mark_changed()
+

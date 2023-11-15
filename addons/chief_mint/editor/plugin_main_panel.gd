@@ -5,12 +5,17 @@ onready var rows : Control = $Vbox/Acheivements/Rows
 
 onready var panel = $Vbox/Panel
 
+onready var save_button : Button = $Vbox/Panel/TopUI/SaveButton
+
 const Row := preload("res://addons/chief_mint/editor/definition_row.tscn")
 
 var editor_scale := 1.0 setget set_editor_scale # set once by the plugin
 
 var definitions: ChiefMintDefinitionsResource
 
+var changed_items : Array = []
+
+signal saved()
 
 func reload_from_file():
 	for node in rows.get_children():
@@ -79,6 +84,9 @@ func set_editor_scale(value: float) -> void:
 
 
 func get_definitions() -> ChiefMintDefinitionsResource:
+	if not is_instance_valid(rows):
+		return null
+	
 	var out := ChiefMintDefinitionsResource.new()
 	
 	var names_seen := []
@@ -114,7 +122,8 @@ func create_row():
 	rows.add_child(new_row)
 	new_row.owner = self
 	new_row.connect("definition_removed", self, "_on_def_removed")
-	#new_row.connect("definition_changed", self, "_on_def_changed")
+	new_row.connect("definition_changed", self, "_on_def_changed")
+	self.connect("saved", new_row, "on_saved")
 	return new_row
 	
 
@@ -125,6 +134,9 @@ func _on_SaveButton_pressed():
 	var err = ResourceSaver.save(savePath, definitions)
 	if err == OK:
 		print("Saved")
+		emit_signal("saved")
+		changed_items.clear()
+		save_button.disabled = true
 	else:
 		printerr("OH NO!")
 
@@ -133,4 +145,13 @@ func _on_def_removed(definition: ChiefMintDefinitionResource) -> void:
 	# two rows implies only a completion row and this one being deleted
 	if rows.get_child_count() <= 2:
 		create_tbd_def()
+
+
+func _on_def_changed(unedited_def: ChiefMintDefinitionResource, has_changes: bool) -> void:
+	if not has_changes and changed_items.has(unedited_def.name):
+		changed_items.erase(unedited_def.name)
+	elif has_changes and not changed_items.has(unedited_def.name):
+		changed_items.append(unedited_def.name)
+	
+	save_button.disabled = changed_items.empty()
 

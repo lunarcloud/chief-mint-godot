@@ -9,7 +9,7 @@ script = ExtResource( 1 )
 name = "Master of All"
 description = ""
 icon_path = ""
-maximum_progress = 0
+maximum_progress = 1
 display_partial_progress = true
 rarity = 3
 
@@ -17,9 +17,9 @@ rarity = 3
 resource_name = "Chief Mint Definition Resource"
 script = ExtResource( 1 )
 name = "test 2"
-description = "wow, this is such a rare one!"
+description = "wow, this is such a rare one!	"
 icon_path = ""
-maximum_progress = 0
+maximum_progress = 1
 display_partial_progress = true
 rarity = 2
 
@@ -30,7 +30,7 @@ name = "test1"
 description = "aoeu 
 aoeu"
 icon_path = "res://icon.png"
-maximum_progress = 0
+maximum_progress = 1
 display_partial_progress = true
 rarity = 1
 
@@ -40,7 +40,7 @@ script = ExtResource( 1 )
 name = "commonish"
 description = ""
 icon_path = ""
-maximum_progress = 0
+maximum_progress = 1
 display_partial_progress = true
 rarity = 0
 

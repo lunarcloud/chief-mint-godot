@@ -17,20 +17,20 @@ border_blend = true
 [sub_resource type="Resource" id=8]
 resource_name = "Chief Mint Definition Resource"
 script = ExtResource( 3 )
-name = "Completion"
+name = ""
 description = ""
 icon_path = ""
-maximum_progress = 0
-display_partial_progress = false
-rarity = 3
+maximum_progress = 1
+display_partial_progress = true
+rarity = 0
 
 [sub_resource type="Resource" id=9]
 resource_name = "Chief Mint Definition Resource"
 script = ExtResource( 3 )
-name = "test3"
+name = ""
 description = ""
 icon_path = ""
-maximum_progress = 0
+maximum_progress = 1
 display_partial_progress = true
 rarity = 0
 
@@ -111,6 +111,7 @@ grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 48, 32 )
 size_flags_vertical = 6
+disabled = true
 icon = ExtResource( 7 )
 icon_align = 1
 script = ExtResource( 5 )
