@@ -1,11 +1,35 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/chief_mint/ui/simple_ui.tscn" type="PackedScene" id=1]
 
+[sub_resource type="ViewportTexture" id=1]
+flags = 4
+viewport_path = NodePath("Viewport")
+
+[sub_resource type="SpatialMaterial" id=2]
+resource_local_to_scene = true
+flags_transparent = true
+flags_unshaded = true
+flags_no_depth_test = true
+flags_do_not_receive_shadows = true
+flags_disable_ambient_light = true
+params_billboard_mode = 2
+albedo_texture = SubResource( 1 )
+
+[sub_resource type="QuadMesh" id=3]
+resource_local_to_scene = true
+material = SubResource( 2 )
+size = Vector2( 4.2, 1.64 )
+
 [node name="ChiefMint3DUi" type="Spatial"]
 
+[node name="Display" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.840612, 0 )
+mesh = SubResource( 3 )
+
 [node name="Viewport" type="Viewport" parent="."]
-size = Vector2( 640, 320 )
+size = Vector2( 420, 164 )
 transparent_bg = true
+render_target_v_flip = true
 
 [node name="ChiefMintSimpleUi" parent="Viewport" instance=ExtResource( 1 )]

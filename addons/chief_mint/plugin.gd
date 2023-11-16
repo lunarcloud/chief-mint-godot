@@ -5,6 +5,7 @@ extends EditorPlugin
 const Icon = preload("res://addons/chief_mint/icon/icon-small-grey.png")
 const MainPanel = preload("res://addons/chief_mint/editor/plugin_main_panel.tscn")
 
+
 var main_panel_instance
 
 
@@ -16,9 +17,6 @@ func _define_project_setting(
 		p_default_val = "") -> void:
 	# p_default_val can be any type!!
 
-	if !ProjectSettings.has_setting(p_name):
-		ProjectSettings.set_setting(p_name, p_default_val)
-
 	var property_info : Dictionary = {
 		"name" : p_name,
 		"type" : p_type,
@@ -28,24 +26,35 @@ func _define_project_setting(
 
 	ProjectSettings.add_property_info(property_info)
 	ProjectSettings.set_initial_value(p_name, p_default_val)
+	if !ProjectSettings.has_setting(p_name):
+		ProjectSettings.set_setting(p_name, p_default_val)
+
 
 
 func _enter_tree():
 	# Add Main Definitions File to the project settings
 	_define_project_setting(
-			"chief_mint/editor/definitions",
+			ChiefMintConstants.MINT_DEFINITION_SETTING,
 			TYPE_STRING,
 			PROPERTY_HINT_FILE,
 			"*.mints",
-			"res://chiefmints.tres")
+			ChiefMintConstants.MINT_DEFINITION_DEFAULT)
+	
+	# Add Main Definitions File to the project settings
+	_define_project_setting(
+			ChiefMintConstants.MINT_SOURCE_SETTING,
+			TYPE_STRING,
+			PROPERTY_HINT_FILE,
+			"chief_mint_source_*.gd",
+			ChiefMintConstants.MINT_SOURCE_DEFAULT)
 			
 	# Add Local Storage path to the project settings
 	_define_project_setting(
-			"chief_mint/local_storage/save_location",
+			ChiefMintConstants.MINT_SOURCE_LOCAL_PATH_SETTING,
 			TYPE_STRING,
 			PROPERTY_HINT_PLACEHOLDER_TEXT,
-			"user://chiefmints.info",
-			"user://chiefmints.info")
+			ChiefMintConstants.MINT_SOURCE_LOCAL_PATH_DEFAULT,
+			ChiefMintConstants.MINT_SOURCE_LOCAL_PATH_DEFAULT)
 	
 	# Registers the ChiefMint node as an autoloaded singleton.
 	add_autoload_singleton("ChiefMint", "res://addons/chief_mint/chief_mint_singleton.gd")

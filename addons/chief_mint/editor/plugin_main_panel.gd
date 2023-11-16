@@ -21,7 +21,7 @@ func reload_from_file():
 	for node in rows.get_children():
 		node.queue_free()
 	
-	var loadPath = ProjectSettings.get_setting("chief_mint/editor/definitions")
+	var loadPath = ProjectSettings.get_setting(ChiefMintConstants.MINT_DEFINITION_SETTING)
 	if loadPath == null or not ResourceLoader.exists(loadPath):
 		definitions = ChiefMintDefinitionsResource.new()
 	else:
@@ -43,7 +43,8 @@ func reload_from_file():
 	
 	# Add a mint at the top if no mints exist
 	if definitions.definitions.size() == 0 \
-		or definitions.definitions.size() == 1 and definitions.definitions[0].rarity == ChiefMintDefinitionResource.ChiefMintRarity.Completion:
+		or definitions.definitions.size() == 1 \
+		and definitions.definitions[0].rarity == ChiefMintDefinitionResource.ChiefMintRarity.Completion:
 		create_tbd_def()
 		
 	# Add a completion mint at the top if no completion mints exist
@@ -129,7 +130,7 @@ func create_row():
 
 func _on_SaveButton_pressed():
 	definitions = get_definitions()
-	var savePath = ProjectSettings.get_setting("chief_mint/editor/definitions")
+	var savePath = ProjectSettings.get_setting(ChiefMintConstants.MINT_DEFINITION_SETTING)
 	print("Trying to save {f}".format({'f': savePath}))
 	var err = ResourceSaver.save(savePath, definitions)
 	if err == OK:

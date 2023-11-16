@@ -1,16 +1,27 @@
 extends Node
+class_name ChiefMintSource
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+func get_source_name() -> String:
+	return "none"
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+func load_defs() -> ChiefMintDefinitionsResource:
+	return ChiefMintDefinitionsResource.new()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func load_saved() -> ChiefMintSaveResource:
+	return ChiefMintSaveResource.new()
+
+
+func increment_progress(name: String) -> ChiefMintResource:
+	return ChiefMintResource.new()
+
+
+func set_progress(name: String, value) -> ChiefMintResource:
+	return ChiefMintResource.new()
+
+
+func get_progress(name: String) -> ChiefMintProgress:
+	return ChiefMintProgress.new()
+
