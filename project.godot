@@ -96,9 +96,8 @@ ChiefMint="*res://addons/chief_mint/chief_mint_singleton.gd"
 
 [chief_mint]
 
-editor/definitions="res://chiefmints.tres"
+editor/definitions="res://example_mints/chiefmints.tres"
 source/local_source_location="user://chiefmints.tres"
-source/source_script="res://addons/chief_mint/sources/chief_mint_source_file.gd"
 
 [editor_plugins]
 

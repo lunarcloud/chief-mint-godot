@@ -18,4 +18,5 @@
 /project.godot										export-ignore
 /screenshots        							export-ignore
 /art-sources        							export-ignore
+/example_mints      							export-ignore
 /addons/editor_icon_previewer     export-ignore
