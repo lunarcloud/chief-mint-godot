@@ -4,7 +4,7 @@ extends Resource
 ## Resource that contains the information for an achievement (but not it's current progress)
 
 ## Rarity Levels for a Mint
-enum ChiefMintRarity { Common = 0, Uncommon = 1, Rare = 2, Completion = 3 }
+enum ChiefMintRarity { COMMON = 0, UNCOMMON = 1, RARE = 2, COMPLETION = 3 }
 
 export var name: String
 
@@ -16,7 +16,7 @@ export(int, 1, 255, 1) var maximum_progress: int = 1
 
 export var display_partial_progress: bool = true
 
-export(int, "Common", "Uncommon", "Rare", "Completion") var rarity := ChiefMintRarity.Common
+export(int, "Common", "Uncommon", "Rare", "Completion") var rarity := ChiefMintRarity.COMMON
 
 
 func _init():

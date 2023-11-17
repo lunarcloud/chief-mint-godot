@@ -23,7 +23,7 @@ func _define_project_setting(
 
 	ProjectSettings.add_property_info(property_info)
 	ProjectSettings.set_initial_value(p_name, p_default_val)
-	if !ProjectSettings.has_setting(p_name):
+	if not ProjectSettings.has_setting(p_name):
 		ProjectSettings.set_setting(p_name, p_default_val)
 
 

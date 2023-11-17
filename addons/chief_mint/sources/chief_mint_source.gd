@@ -24,20 +24,20 @@ func clear_all_progress() -> bool:
 
 
 ## Increment the progress of a mint
-func increment_progress(name: String) -> ChiefMintResource:
+func increment_progress(_name: String) -> ChiefMintResource:
 	return ChiefMintResource.new()
 
 
 ## Force the progress of a mint to a specific value (optional for source to implement)
-func set_progress(name: String, value) -> ChiefMintResource:
+func set_progress(_name: String, _value) -> ChiefMintResource:
 	return ChiefMintResource.new()
 
 
 ## Get whether the mint is considered achieved
-func is_complete(name: String) -> bool:
+func is_complete(_name: String) -> bool:
 	return false
 
 
 ## Get the progress towards the completion of a mint
-func get_progress(name: String) -> ChiefMintProgress:
+func get_progress(_name: String) -> ChiefMintProgress:
 	return ChiefMintProgress.new()

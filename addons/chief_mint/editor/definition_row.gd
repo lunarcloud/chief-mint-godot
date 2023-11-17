@@ -4,6 +4,10 @@ extends Panel
 ## Mint Definition Row
 ## The UI for a single Mint in the editor UI
 
+signal definition_changed(definition, has_changes)
+
+signal definition_removed(definition)
+
 export(Resource) var definition setget set_definition
 var unedited: Resource
 
@@ -15,10 +19,6 @@ var rarity_options: OptionButton
 var rarity_completion: TextureRect
 var icon_display: TextureRect
 var changes_label: Label
-
-signal definition_changed(definition, has_changes)
-
-signal definition_removed(definition)
 
 
 # Called when the node enters the scene tree for the first time.
@@ -81,11 +81,11 @@ func set_definition(def: ChiefMintDefinitionResource) -> void:
 	if is_instance_valid(rarity_completion) and is_instance_valid(rarity_options):
 		rarity_completion.visible = (
 			def.rarity
-			== ChiefMintDefinitionResource.ChiefMintRarity.Completion
+			== ChiefMintDefinitionResource.ChiefMintRarity.COMPLETION
 		)
 		rarity_options.visible = not rarity_completion.visible
 
-		if def.rarity < ChiefMintDefinitionResource.ChiefMintRarity.Completion:
+		if def.rarity < ChiefMintDefinitionResource.ChiefMintRarity.COMPLETION:
 			rarity_options.select(def.rarity)
 		else:
 			$HBoxContainer/InfoContainer/MaxProgressLabel.visible = false

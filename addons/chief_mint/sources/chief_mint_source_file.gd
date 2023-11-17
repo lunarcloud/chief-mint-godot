@@ -3,20 +3,20 @@ extends ChiefMintSource
 ## Mint Source: File
 ## Chief Mint Source that uses a local saved file as the current state
 
-var defPath
-var savePath
+var def_path
+var save_path
 
 var stored_data: ChiefMintSaveResource
 
 
 func _init():
-	defPath = ProjectSettings.get_setting(ChiefMintConstants.MINT_DEFINITION_SETTING)
-	if defPath == null:
-		defPath = ChiefMintConstants.MINT_DEFINITION_DEFAULT
+	def_path = ProjectSettings.get_setting(ChiefMintConstants.MINT_DEFINITION_SETTING)
+	if def_path == null:
+		def_path = ChiefMintConstants.MINT_DEFINITION_DEFAULT
 
-	savePath = ProjectSettings.get_setting(ChiefMintConstants.MINT_SOURCE_LOCAL_PATH_SETTING)
-	if savePath == null:
-		savePath = ChiefMintConstants.MINT_SOURCE_LOCAL_PATH_DEFAULT
+	save_path = ProjectSettings.get_setting(ChiefMintConstants.MINT_SOURCE_LOCAL_PATH_SETTING)
+	if save_path == null:
+		save_path = ChiefMintConstants.MINT_SOURCE_LOCAL_PATH_DEFAULT
 		_save()
 
 	load_saved()
@@ -27,20 +27,19 @@ func get_source_name() -> String:
 
 
 func load_defs() -> ChiefMintDefinitionsResource:
-	if defPath == null or not ResourceLoader.exists(defPath):
+	if def_path == null or not ResourceLoader.exists(def_path):
 		return ChiefMintDefinitionsResource.new()
-	else:
-		return load(defPath) as ChiefMintDefinitionsResource
+	return load(def_path) as ChiefMintDefinitionsResource
 
 
 func load_saved() -> ChiefMintSaveResource:
 	if stored_data != null:
 		return stored_data
 
-	if savePath == null or not ResourceLoader.exists(savePath):
+	if save_path == null or not ResourceLoader.exists(save_path):
 		stored_data = create_save_from_definitions(load_defs())
 	else:
-		stored_data = load(savePath) as ChiefMintSaveResource
+		stored_data = load(save_path) as ChiefMintSaveResource
 
 	return stored_data
 
@@ -50,7 +49,9 @@ func clear_all_progress() -> bool:
 	return _save()
 
 
-static func create_save_from_definitions(defs: ChiefMintDefinitionsResource) -> ChiefMintSaveResource:
+static func create_save_from_definitions(
+		defs: ChiefMintDefinitionsResource
+	) -> ChiefMintSaveResource:
 	var data = ChiefMintSaveResource.new()
 	for def in defs.definitions:
 		var mint = ChiefMintResource.new()
@@ -63,14 +64,14 @@ static func create_save_from_definitions(defs: ChiefMintDefinitionsResource) -> 
 
 
 func _save() -> bool:
-	#print("Trying to save {f}".format({'f': savePath}))
-	var err = ResourceSaver.save(savePath, stored_data)
+	#print("Trying to save {f}".format({'f': save_path}))
+	var err = ResourceSaver.save(save_path, stored_data)
 	if err == OK:
-		#print("Saved {f}".format({'f': savePath}))
+		#print("Saved {f}".format({'f': save_path}))
 		return true
-	else:
-		printerr("Failed to save {f}!".format({"f": savePath}))
-		return false
+
+	printerr("Failed to save {f}!".format({"f": save_path}))
+	return false
 
 
 func increment_progress(name: String) -> ChiefMintResource:

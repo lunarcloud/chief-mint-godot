@@ -5,6 +5,8 @@ extends Control
 
 export var display_time := 2.0
 
+var _current_notify = 0
+
 onready var animation_player: AnimationPlayer = $AnimationPlayer
 onready var chief_mints: ChiefMintSingleton = $"/root/ChiefMint"
 
@@ -12,8 +14,6 @@ onready var icon: TextureRect = $Panel/HBoxContainer/Container/Icon
 onready var name_label: Label = $Panel/HBoxContainer/VBoxContainer/Name
 onready var description_label: Label = $Panel/HBoxContainer/VBoxContainer/Description
 onready var progressbar: ProgressBar = $Panel/HBoxContainer/VBoxContainer/ProgressBar
-
-var _currentNotify = 0
 
 
 func _ready():
@@ -42,7 +42,7 @@ func _show(seconds: float = display_time):
 		yield(animation_player, "animation_finished")
 
 	var id = Time.get_ticks_msec()
-	_currentNotify = id
+	_current_notify = id
 
 	animation_player.play("Show")
 	yield(animation_player, "animation_finished")
@@ -51,7 +51,7 @@ func _show(seconds: float = display_time):
 
 
 func _hide(id: int) -> void:
-	if _currentNotify != id:
+	if _current_notify != id:
 		return  # The notification has been replaced
 
 	animation_player.play("Hide")

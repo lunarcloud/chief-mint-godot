@@ -3,11 +3,7 @@ extends Panel
 ## Plugin Main Panel
 ## The UI for the Chief Mint editor main window tab
 
-onready var rows: Control = $Vbox/Acheivements/Rows
-
-onready var panel = $Vbox/Panel
-
-onready var save_button: Button = $Vbox/Panel/TopUI/SaveButton
+signal saved
 
 const Row := preload("res://addons/chief_mint/editor/definition_row.tscn")
 
@@ -17,18 +13,22 @@ var definitions: ChiefMintDefinitionsResource
 
 var changed_items: Array = []
 
-signal saved
+onready var rows: Control = $Vbox/Acheivements/Rows
+
+onready var panel = $Vbox/Panel
+
+onready var save_button: Button = $Vbox/Panel/TopUI/SaveButton
 
 
 func reload_from_file():
 	for node in rows.get_children():
 		node.queue_free()
 
-	var loadPath = ProjectSettings.get_setting(ChiefMintConstants.MINT_DEFINITION_SETTING)
-	if loadPath == null or not ResourceLoader.exists(loadPath):
+	var load_path = ProjectSettings.get_setting(ChiefMintConstants.MINT_DEFINITION_SETTING)
+	if load_path == null or not ResourceLoader.exists(load_path):
 		definitions = ChiefMintDefinitionsResource.new()
 	else:
-		definitions = load(loadPath)
+		definitions = load(load_path)
 
 	var has_completion_mint := false
 
@@ -36,11 +36,11 @@ func reload_from_file():
 	for def in definitions.definitions:
 		var this_is_completion: bool = (
 			def.rarity
-			== ChiefMintDefinitionResource.ChiefMintRarity.Completion
+			== ChiefMintDefinitionResource.ChiefMintRarity.COMPLETION
 		)
 
 		if this_is_completion and has_completion_mint:
-			def.rarity = ChiefMintDefinitionResource.ChiefMintRarity.Common
+			def.rarity = ChiefMintDefinitionResource.ChiefMintRarity.COMMON
 		if this_is_completion:
 			has_completion_mint = true
 
@@ -54,7 +54,7 @@ func reload_from_file():
 			definitions.definitions.size() == 1
 			and (
 				definitions.definitions[0].rarity
-				== ChiefMintDefinitionResource.ChiefMintRarity.Completion
+				== ChiefMintDefinitionResource.ChiefMintRarity.COMPLETION
 			)
 		)
 	):
@@ -64,7 +64,7 @@ func reload_from_file():
 	if not has_completion_mint:
 		var completion := ChiefMintDefinitionResource.new()
 		completion.name = "Completion"
-		completion.rarity = ChiefMintDefinitionResource.ChiefMintRarity.Completion
+		completion.rarity = ChiefMintDefinitionResource.ChiefMintRarity.COMPLETION
 		definitions.definitions.insert(0, completion)
 
 		var new_row = create_row()
@@ -145,19 +145,19 @@ func create_row():
 
 func _on_SaveButton_pressed():
 	definitions = get_definitions()
-	var savePath = ProjectSettings.get_setting(ChiefMintConstants.MINT_DEFINITION_SETTING)
-	#print("Trying to save {f}".format({'f': savePath}))
-	var err = ResourceSaver.save(savePath, definitions)
+	var save_path = ProjectSettings.get_setting(ChiefMintConstants.MINT_DEFINITION_SETTING)
+	#print("Trying to save {f}".format({'f': save_path}))
+	var err = ResourceSaver.save(save_path, definitions)
 	if err == OK:
-		#print("Saved {f}".format({'f': savePath}))
+		#print("Saved {f}".format({'f': save_path}))
 		emit_signal("saved")
 		changed_items.clear()
 		save_button.disabled = true
 	else:
-		printerr("Failed to save {f}!".format({"f": savePath}))
+		printerr("Failed to save {f}!".format({"f": save_path}))
 
 
-func _on_def_removed(definition: ChiefMintDefinitionResource) -> void:
+func _on_def_removed(_definition: ChiefMintDefinitionResource) -> void:
 	# two rows implies only a completion row and this one being deleted
 	if rows.get_child_count() <= 2:
 		create_tbd_def()
