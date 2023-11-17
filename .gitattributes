@@ -4,4 +4,5 @@
 # Only include the chief_mint addons folder when downloading from the Asset Library.
 /**        							export-ignore
 /addons    							!export-ignore
+/addons/chief_mint 			!export-ignore
 /addons/chief_mint/** 	!export-ignore
