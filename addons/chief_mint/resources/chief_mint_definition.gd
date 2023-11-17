@@ -13,7 +13,7 @@ export var name: String
 
 export var description: String
 
-export var icon_path: String
+export var icon: Image
 
 export(int, 1, 255, 1) var maximum_progress: int = 1
 
@@ -45,8 +45,8 @@ static func differences(a: ChiefMintDefinitionResource, b: ChiefMintDefinitionRe
 		differences.append('name')
 	if a.description != b.description:
 		differences.append('description')
-	if a.icon_path != b.icon_path:
-		differences.append('icon_path')
+	if a.icon != b.icon:
+		differences.append('icon')
 	if a.maximum_progress != b.maximum_progress:
 		differences.append('maximum_progress')
 	if a.display_partial_progress != b.display_partial_progress:

@@ -26,8 +26,7 @@ func notify(res: ChiefMintResource) -> void:
 	name_label.text = res.definition.name
 	description_label.text = res.definition.description
 	
-	var icon_tex : ImageTexture = icon.texture
-	icon_tex.resource_path = res.definition.icon_path
+	icon.texture.create_from_image(res.definition.icon)
 	
 	progressbar.visible = res.progress.maximum > 1
 	progressbar.max_value = res.progress.maximum
