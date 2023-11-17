@@ -13,3 +13,7 @@ func _on_HatTrickProgressButton_pressed():
 
 func _on_CommonEventButton_pressed():
 	chief_mints.increment_progress("commonish")
+
+
+func _on_ClearLocalButton_pressed():
+	chief_mints.clear_all_progress()

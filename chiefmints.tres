@@ -16,21 +16,21 @@ rarity = 3
 [sub_resource type="Resource" id=2]
 resource_name = "Chief Mint Definition Resource"
 script = ExtResource( 1 )
-name = "test 2"
+name = "Rare Event"
 description = "wow, this is such a rare one!	"
 icon_path = ""
-maximum_progress = 1
-display_partial_progress = true
+maximum_progress = 1.0
+display_partial_progress = false
 rarity = 2
 
 [sub_resource type="Resource" id=3]
 resource_name = "Chief Mint Definition Resource"
 script = ExtResource( 1 )
-name = "test1"
+name = "Hat Trick"
 description = "aoeu 
 aoeu"
 icon_path = "res://icon.png"
-maximum_progress = 1
+maximum_progress = 3.0
 display_partial_progress = true
 rarity = 1
 
@@ -38,10 +38,10 @@ rarity = 1
 resource_name = "Chief Mint Definition Resource"
 script = ExtResource( 1 )
 name = "commonish"
-description = ""
+description = "Something like finishing a level"
 icon_path = ""
 maximum_progress = 1
-display_partial_progress = true
+display_partial_progress = false
 rarity = 0
 
 [resource]

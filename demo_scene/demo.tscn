@@ -13,31 +13,39 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -298.0
-margin_top = -123.0
-margin_right = -8.0
-margin_bottom = 117.0
+margin_left = -314.0
+margin_top = -152.0
+margin_right = -24.0
+margin_bottom = 153.0
 custom_constants/separation = 24
 
 [node name="RareEventButton" type="Button" parent="VBoxContainer"]
 margin_right = 290.0
-margin_bottom = 64.0
+margin_bottom = 58.0
 size_flags_vertical = 3
 text = "Rare Event"
 
 [node name="HatTrickProgressButton" type="Button" parent="VBoxContainer"]
-margin_top = 88.0
+margin_top = 82.0
 margin_right = 290.0
-margin_bottom = 152.0
+margin_bottom = 140.0
 size_flags_vertical = 3
 text = "Hat Trick Progress"
 
 [node name="CommonEventButton" type="Button" parent="VBoxContainer"]
-margin_top = 176.0
+margin_top = 164.0
 margin_right = 290.0
-margin_bottom = 240.0
+margin_bottom = 222.0
 size_flags_vertical = 3
 text = "Common Event"
+
+[node name="ClearLocalButton" type="Button" parent="VBoxContainer"]
+margin_top = 246.0
+margin_right = 290.0
+margin_bottom = 305.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Clear Local Progress"
 
 [node name="Label" type="Label" parent="."]
 anchor_left = 0.5
@@ -58,3 +66,4 @@ valign = 1
 [connection signal="pressed" from="VBoxContainer/RareEventButton" to="." method="_on_RareEventButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/HatTrickProgressButton" to="." method="_on_HatTrickProgressButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/CommonEventButton" to="." method="_on_CommonEventButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/ClearLocalButton" to="." method="_on_ClearLocalButton_pressed"]

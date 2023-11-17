@@ -131,15 +131,15 @@ func create_row():
 func _on_SaveButton_pressed():
 	definitions = get_definitions()
 	var savePath = ProjectSettings.get_setting(ChiefMintConstants.MINT_DEFINITION_SETTING)
-	print("Trying to save {f}".format({'f': savePath}))
+	#print("Trying to save {f}".format({'f': savePath}))
 	var err = ResourceSaver.save(savePath, definitions)
 	if err == OK:
-		print("Saved")
+		#print("Saved {f}".format({'f': savePath}))
 		emit_signal("saved")
 		changed_items.clear()
 		save_button.disabled = true
 	else:
-		printerr("OH NO!")
+		printerr("Failed to save {f}!".format({'f': savePath}))
 
 
 func _on_def_removed(definition: ChiefMintDefinitionResource) -> void:

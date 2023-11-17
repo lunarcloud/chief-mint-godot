@@ -15,6 +15,7 @@ func _init():
 	savePath = ProjectSettings.get_setting(ChiefMintConstants.MINT_SOURCE_LOCAL_PATH_SETTING)
 	if savePath == null:
 		savePath = ChiefMintConstants.MINT_SOURCE_LOCAL_PATH_DEFAULT
+		_save()
 	
 	load_saved()
 
@@ -35,14 +36,19 @@ func load_saved() -> ChiefMintSaveResource:
 		return stored_data
 
 	if savePath == null or not ResourceLoader.exists(savePath):
-		stored_data = save_from_definitions(load_defs())
+		stored_data = create_save_from_definitions(load_defs())
 	else:
 		stored_data = load(savePath) as ChiefMintSaveResource
 	
 	return stored_data
 
 
-static func save_from_definitions(defs: ChiefMintDefinitionsResource) -> ChiefMintSaveResource:
+func clear_all_progress() -> bool:
+	stored_data = create_save_from_definitions(load_defs())
+	return _save()
+
+
+static func create_save_from_definitions(defs: ChiefMintDefinitionsResource) -> ChiefMintSaveResource:
 	var data = ChiefMintSaveResource.new()
 	for def in defs.definitions:
 		var mint = ChiefMintResource.new()
@@ -54,10 +60,24 @@ static func save_from_definitions(defs: ChiefMintDefinitionsResource) -> ChiefMi
 	return data
 
 
+func _save() -> bool:
+	#print("Trying to save {f}".format({'f': savePath}))
+	var err = ResourceSaver.save(savePath, stored_data)
+	if err == OK:
+		#print("Saved {f}".format({'f': savePath}))
+		return true
+	else:
+		printerr("Failed to save {f}!".format({'f': savePath}))
+		return false
+
+
 func increment_progress(name: String) -> ChiefMintResource:
 	for mint in stored_data.mints:
-		if mint.definition.name == name:
+		if mint.definition == null:
+			pass
+		elif mint.definition.name == name:
 			mint.progress.current += 1
+			_save()
 			return mint
 	return null
 
@@ -66,8 +86,16 @@ func set_progress(name: String, value) -> ChiefMintResource:
 	for mint in stored_data.mints:
 		if mint.definition.name == name:
 			mint.progress.current = value
+			_save()
 			return mint
 	return null
+
+
+func is_complete(name: String) -> bool:
+	for mint in stored_data.mints:
+		if mint.definition.name == name:
+			return mint.progress.is_complete()
+	return false
 
 
 func get_progress(name: String) -> ChiefMintProgress:
