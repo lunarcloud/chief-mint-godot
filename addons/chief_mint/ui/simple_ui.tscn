@@ -161,8 +161,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 24.0
 margin_top = 48.0
-margin_right = 370.0
-margin_bottom = 188.0
+margin_right = -24.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
 anchor_right = 1.0
@@ -188,8 +189,10 @@ texture = SubResource( 1 )
 stretch_mode = 5
 
 [node name="ColorRect" type="ColorRect" parent="Panel/HBoxContainer/Container"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_left = 32.0
+margin_top = 62.0
+margin_right = 32.0
+margin_bottom = 62.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0, 0, 0, 1 )

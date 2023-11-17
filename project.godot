@@ -94,6 +94,12 @@ config/icon="res://icon.png"
 
 ChiefMint="*res://addons/chief_mint/chief_mint_singleton.gd"
 
+[chief_mint]
+
+editor/definitions="res://chiefmints.tres"
+source/source_script="res://addons/chief_mint/sources/chief_mint_source_file.gd"
+source/local_source_location="user://chiefmints.info"
+
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/chief_mint/plugin.cfg" )

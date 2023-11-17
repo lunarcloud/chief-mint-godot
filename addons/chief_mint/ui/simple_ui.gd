@@ -1,6 +1,7 @@
 extends Control
 class_name ChiefMintSimpleUi
 
+export var display_time := 2.0
 
 onready var animation_player : AnimationPlayer = $AnimationPlayer
 onready var chief_mints : ChiefMintSingleton = $"/root/ChiefMint"
@@ -9,6 +10,8 @@ onready var icon : TextureRect = $Panel/HBoxContainer/Container/Icon
 onready var name_label : Label = $Panel/HBoxContainer/VBoxContainer/Name
 onready var description_label : Label = $Panel/HBoxContainer/VBoxContainer/Description
 onready var progressbar : ProgressBar = $Panel/HBoxContainer/VBoxContainer/ProgressBar
+
+var _currentNotify = 0
 
 
 func _ready():
@@ -29,16 +32,28 @@ func notify(res: ChiefMintResource) -> void:
 	progressbar.visible = res.progress.maximum > 1
 	progressbar.max_value = res.progress.maximum
 	progressbar.value = res.progress.current
-	show()
+	
+	_show()
 
 
-func show(seconds : float = 2):
+func _show(seconds : float = display_time):
+	if animation_player.current_animation:
+		yield(animation_player, "animation_finished")
+	
+	var id = Time.get_ticks_msec()
+	_currentNotify = id
+	
 	animation_player.play("Show")
-	if seconds != null and seconds > 0:
-		animation_player.connect("animation_finished", self, "hide", [seconds], CONNECT_ONESHOT)
+	yield(animation_player, "animation_finished")
+	yield(get_tree().create_timer(seconds), "timeout")
+	_hide(id)
 
 
-func hide(seconds : float = 0):
-	if seconds != null and seconds > 0:
-		yield(get_tree().create_timer(seconds), "timeout")
+func _hide(id: int) -> void:
+	if _currentNotify != id:
+		return # The notification has been replaced
+	
 	animation_player.play("Hide")
+	yield(animation_player, "animation_finished")
+	animation_player.play("Hidden")
+
