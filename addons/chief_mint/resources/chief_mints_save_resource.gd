@@ -1,5 +1,7 @@
 class_name ChiefMintSaveResource, "res://addons/chief_mint/icon/icon.svg"
 extends Resource
+## Chief Mint Save Resource
+## A list of chief mints resources (definition and progress)
 
 # Array<ChiefMintResource>
 export(Array, Resource) var mints : Array

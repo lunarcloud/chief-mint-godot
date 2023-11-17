@@ -1,5 +1,7 @@
-extends ChiefMintSource
 class_name ChiefMintSourceFile
+extends ChiefMintSource
+## Mint Source: File
+## Chief Mint Source that uses a local saved file as the current state
 
 
 var defPath
@@ -11,12 +13,12 @@ func _init():
 	defPath = ProjectSettings.get_setting(ChiefMintConstants.MINT_DEFINITION_SETTING)
 	if defPath == null:
 		defPath = ChiefMintConstants.MINT_DEFINITION_DEFAULT
-	
+
 	savePath = ProjectSettings.get_setting(ChiefMintConstants.MINT_SOURCE_LOCAL_PATH_SETTING)
 	if savePath == null:
 		savePath = ChiefMintConstants.MINT_SOURCE_LOCAL_PATH_DEFAULT
 		_save()
-	
+
 	load_saved()
 
 
@@ -39,7 +41,7 @@ func load_saved() -> ChiefMintSaveResource:
 		stored_data = create_save_from_definitions(load_defs())
 	else:
 		stored_data = load(savePath) as ChiefMintSaveResource
-	
+
 	return stored_data
 
 

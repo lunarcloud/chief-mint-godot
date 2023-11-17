@@ -1,4 +1,6 @@
 extends Control
+## Demonstration Scene for Chief Mints
+## Simple button-driven scene that increments acheivements and receives notifications via the standard simple UI.
 
 onready var chief_mints : ChiefMintSingleton = $"/root/ChiefMint"
 

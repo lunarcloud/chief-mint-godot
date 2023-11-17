@@ -1,5 +1,7 @@
 class_name ChiefMintDefinitionsResource, "res://addons/chief_mint/icon/icon.svg"
 extends Resource
+## Chief Mint Definitions Resource
+## List of mint definitions
 
 
 export(Array, Resource) var definitions : Array

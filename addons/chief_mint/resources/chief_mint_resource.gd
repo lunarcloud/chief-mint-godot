@@ -1,5 +1,7 @@
 class_name ChiefMintResource, "res://addons/chief_mint/icon/icon.svg"
 extends Resource
+## Chief Mint Resource
+## The definition and current progress
 
 export(Resource) var definition: Resource #: ChiefMintDefinitionResource
 export(Resource) var progress: Resource #: ChiefMintProgress

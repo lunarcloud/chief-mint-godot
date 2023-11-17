@@ -1,5 +1,7 @@
-extends Control
 class_name ChiefMintSimpleUi
+extends Control
+## Simple ChiefMint Notification UI
+## A simple, 2D "toaster" style popup
 
 export var display_time := 2.0
 
@@ -22,26 +24,26 @@ func notify(res: ChiefMintResource) -> void:
 	if res == null:
 		push_warning("Notified about null mint")
 		return
-	
+
 	name_label.text = res.definition.name
 	description_label.text = res.definition.description
-	
+
 	icon.texture.create_from_image(res.definition.icon)
-	
+
 	progressbar.visible = res.progress.maximum > 1
 	progressbar.max_value = res.progress.maximum
 	progressbar.value = res.progress.current
-	
+
 	_show()
 
 
 func _show(seconds : float = display_time):
 	if animation_player.current_animation:
 		yield(animation_player, "animation_finished")
-	
+
 	var id = Time.get_ticks_msec()
 	_currentNotify = id
-	
+
 	animation_player.play("Show")
 	yield(animation_player, "animation_finished")
 	yield(get_tree().create_timer(seconds), "timeout")
@@ -51,7 +53,7 @@ func _show(seconds : float = display_time):
 func _hide(id: int) -> void:
 	if _currentNotify != id:
 		return # The notification has been replaced
-	
+
 	animation_player.play("Hide")
 	yield(animation_player, "animation_finished")
 	animation_player.play("Hidden")

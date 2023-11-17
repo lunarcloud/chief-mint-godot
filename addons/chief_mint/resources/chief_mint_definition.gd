@@ -1,6 +1,9 @@
 class_name ChiefMintDefinitionResource, "res://addons/chief_mint/icon/icon.svg"
 extends Resource
+## Chief Mint Definition Resource
+## Resource that contains the information for an achievement (but not it's current progress)
 
+## Rarity Levels for a Mint
 enum ChiefMintRarity {
 	Common = 0,
 	Uncommon = 1,
@@ -31,15 +34,16 @@ func is_class(name : String) -> bool:
 	return name == "ChiefMintDefinitionResource" or .is_class(name)
 
 
+## Compare two mint instances, receive a list of the differences
 static func differences(a: ChiefMintDefinitionResource, b: ChiefMintDefinitionResource) -> Array:
 	if a == null:
 		push_warning("Comparing with null resource a!")
 	if b == null:
 		push_warning("Comparing with null resource b!")
-	
+
 	if a == null or b == null:
 		return []
-	
+
 	var differences := []
 	if a.name != b.name:
 		differences.append('name')

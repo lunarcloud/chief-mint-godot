@@ -1,5 +1,7 @@
-extends Node
 class_name ChiefMintSingleton
+extends Node
+## Chief Mint Singleton
+## The singleton which manages and is used to facilitate achievement usage in-game.
 
 var state: ChiefMintSaveResource
 var source: ChiefMintSource

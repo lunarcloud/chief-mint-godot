@@ -1,5 +1,7 @@
 tool
 extends Panel
+## Plugin Main Panel
+## The UI for the Chief Mint editor main window tab
 
 onready var rows : Control = $Vbox/Acheivements/Rows
 
@@ -20,40 +22,40 @@ signal saved()
 func reload_from_file():
 	for node in rows.get_children():
 		node.queue_free()
-	
+
 	var loadPath = ProjectSettings.get_setting(ChiefMintConstants.MINT_DEFINITION_SETTING)
 	if loadPath == null or not ResourceLoader.exists(loadPath):
 		definitions = ChiefMintDefinitionsResource.new()
 	else:
 		definitions = load(loadPath)
-	
+
 	var has_completion_mint := false
-	
+
 	# Create rows for every definition, checking that there is only one completion rarity
 	for def in definitions.definitions:
 		var this_is_completion : bool = def.rarity == ChiefMintDefinitionResource.ChiefMintRarity.Completion
-		
+
 		if this_is_completion and has_completion_mint:
 			def.rarity = ChiefMintDefinitionResource.ChiefMintRarity.Common
 		if this_is_completion:
 			has_completion_mint = true
-			
+
 		var new_row = create_row()
 		new_row.set_definition(def)
-	
+
 	# Add a mint at the top if no mints exist
 	if definitions.definitions.size() == 0 \
 		or definitions.definitions.size() == 1 \
 		and definitions.definitions[0].rarity == ChiefMintDefinitionResource.ChiefMintRarity.Completion:
 		create_tbd_def()
-		
+
 	# Add a completion mint at the top if no completion mints exist
 	if not has_completion_mint:
 		var completion := ChiefMintDefinitionResource.new()
 		completion.name = "Completion"
 		completion.rarity = ChiefMintDefinitionResource.ChiefMintRarity.Completion
 		definitions.definitions.insert(0, completion)
-		
+
 		var new_row = create_row()
 		new_row.set_definition(completion)
 		rows.move_child(new_row, 0)
@@ -74,7 +76,7 @@ func set_editor_theme(value: Theme, node = self) -> void:
 			c.icon_align = Button.ALIGN_CENTER
 		else:
 			self.set_editor_theme(value, c)
-	
+
 
 func set_editor_scale(value: float) -> void:
 	editor_scale = value
@@ -87,11 +89,11 @@ func set_editor_scale(value: float) -> void:
 func get_definitions() -> ChiefMintDefinitionsResource:
 	if not is_instance_valid(rows):
 		return null
-	
+
 	var out := ChiefMintDefinitionsResource.new()
-	
+
 	var names_seen := []
-	
+
 	for node in rows.get_children():
 		if 'definition' in node \
 		and node.definition is ChiefMintDefinitionResource \
@@ -99,7 +101,7 @@ func get_definitions() -> ChiefMintDefinitionsResource:
 		and not names_seen.has(node.definition.name):
 			names_seen.append(node.definition.name)
 			out.definitions.append(node.definition)
-	
+
 	return out
 
 
@@ -111,7 +113,7 @@ func create_tbd_def() -> void:
 	var def := ChiefMintDefinitionResource.new()
 	def.name = "TBD"
 	definitions.definitions.append(def)
-	
+
 	var new_row = create_row()
 	new_row.set_definition(def)
 
@@ -126,7 +128,7 @@ func create_row():
 	new_row.connect("definition_changed", self, "_on_def_changed")
 	self.connect("saved", new_row, "on_saved")
 	return new_row
-	
+
 
 func _on_SaveButton_pressed():
 	definitions = get_definitions()
@@ -153,6 +155,6 @@ func _on_def_changed(unedited_def: ChiefMintDefinitionResource, has_changes: boo
 		changed_items.erase(unedited_def.name)
 	elif has_changes and not changed_items.has(unedited_def.name):
 		changed_items.append(unedited_def.name)
-	
+
 	save_button.disabled = changed_items.empty()
 

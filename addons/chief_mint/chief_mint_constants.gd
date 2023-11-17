@@ -1,4 +1,6 @@
 class_name ChiefMintConstants
+## Chief Mint Plugin Constants
+## Constant variables used in the plugin
 
 const MINT_DEFINITION_SETTING := "chief_mint/editor/definitions"
 const MINT_DEFINITION_DEFAULT := "res://chiefmints.tres"

@@ -1,6 +1,8 @@
 tool
 class_name ChiefMintEditorDefinitionRow, "res://addons/chief_mint/icon/icon.svg"
 extends Panel
+## Mint Definition Row
+## The UI for a single Mint in the editor UI
 
 export(Resource) var definition setget set_definition
 var unedited : Resource
@@ -23,7 +25,7 @@ signal definition_removed(definition)
 func _enter_tree():
 	if not definition is ChiefMintDefinitionResource:
 		definition = ChiefMintDefinitionResource.new()
-	
+
 	name_edit = $HBoxContainer/InfoContainer/NameEdit
 	max_progress_spin_box = $HBoxContainer/InfoContainer/MaxProgressSpinBox
 	description_text_edit = $HBoxContainer/InfoContainer/DescriptionTextEdit
@@ -52,34 +54,34 @@ func set_definition(def: ChiefMintDefinitionResource) -> void:
 		definition = null
 		unedited = null
 		return
-	
+
 	definition = def
 	unedited = definition.duplicate()
-	
+
 	if is_instance_valid(changes_label):
 		changes_label.visible_characters = 0
-	
+
 	if is_instance_valid(name_edit):
-		name_edit.text = def.name 
-		
+		name_edit.text = def.name
+
 	if is_instance_valid(description_text_edit):
-		description_text_edit.text = def.description 
-		
+		description_text_edit.text = def.description
+
 	if is_instance_valid(icon_display) and def.icon != null:
 		var texture = ImageTexture.new()
 		texture.create_from_image(def.icon)
 		icon_display.texture = texture
-		
+
 	if is_instance_valid(max_progress_spin_box):
 		max_progress_spin_box.value = def.maximum_progress
-		
+
 	if is_instance_valid(partial_progress_check_box):
 		partial_progress_check_box.pressed = def.display_partial_progress
-		
+
 	if is_instance_valid(rarity_completion) and is_instance_valid(rarity_options):
 		rarity_completion.visible = def.rarity == ChiefMintDefinitionResource.ChiefMintRarity.Completion
 		rarity_options.visible = not rarity_completion.visible
-		
+
 		if def.rarity < ChiefMintDefinitionResource.ChiefMintRarity.Completion:
 			rarity_options.select(def.rarity)
 		else:
@@ -99,7 +101,7 @@ func on_saved() -> void:
 func _mark_changed() -> void:
 	var diffs = ChiefMintDefinitionResource.differences(unedited, definition)
 	var has_changes = diffs.size() > 0
-	
+
 	changes_label.visible_characters = 0 if not has_changes else 1
 	emit_signal("definition_changed", unedited, has_changes)
 	#print(str("editing result, diffs:", diffs))
@@ -138,15 +140,15 @@ func _on_ImageClearButton_pressed():
 func _on_ImageFileDialog_file_selected(path):
 	if not ResourceLoader.exists(path):
 		return
-	
+
 	var image = Image.new()
 	image.load(path)
 	definition.icon = image
-	
+
 	var texture = ImageTexture.new()
 	texture.create_from_image(image)
 	icon_display.texture = texture
-	
+
 	_mark_changed()
 
 
