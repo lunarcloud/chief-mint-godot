@@ -16,4 +16,6 @@ func _on_CommonEventButton_pressed():
 
 
 func _on_ClearLocalButton_pressed():
-	chief_mints.clear_all_progress()
+	if not chief_mints.clear_all_progress():
+		OS.alert("Couldn't clear the acheivements!", 'Clear Error')
+
