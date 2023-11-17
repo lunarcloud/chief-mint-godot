@@ -41,4 +41,3 @@ func is_complete(name: String) -> bool:
 ## Get the progress towards the completion of a mint
 func get_progress(name: String) -> ChiefMintProgress:
 	return ChiefMintProgress.new()
-

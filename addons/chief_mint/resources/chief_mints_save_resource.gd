@@ -4,7 +4,7 @@ extends Resource
 ## A list of chief mints resources (definition and progress)
 
 # Array<ChiefMintResource>
-export(Array, Resource) var mints : Array
+export(Array, Resource) var mints: Array
 
 
 func _init():
@@ -12,7 +12,5 @@ func _init():
 
 
 # Add support for is_class
-func is_class(name : String) -> bool:
+func is_class(name: String) -> bool:
 	return name == "ChiefMintSaveResource" or .is_class(name)
-
-

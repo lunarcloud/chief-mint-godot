@@ -5,16 +5,16 @@ extends Panel
 ## The UI for a single Mint in the editor UI
 
 export(Resource) var definition setget set_definition
-var unedited : Resource
+var unedited: Resource
 
-var name_edit : LineEdit
-var max_progress_spin_box : SpinBox
-var description_text_edit : TextEdit
-var partial_progress_check_box : CheckBox
+var name_edit: LineEdit
+var max_progress_spin_box: SpinBox
+var description_text_edit: TextEdit
+var partial_progress_check_box: CheckBox
 var rarity_options: OptionButton
-var rarity_completion : TextureRect
-var icon_display : TextureRect
-var changes_label : Label
+var rarity_completion: TextureRect
+var icon_display: TextureRect
+var changes_label: Label
 
 signal definition_changed(definition, has_changes)
 
@@ -79,7 +79,10 @@ func set_definition(def: ChiefMintDefinitionResource) -> void:
 		partial_progress_check_box.pressed = def.display_partial_progress
 
 	if is_instance_valid(rarity_completion) and is_instance_valid(rarity_options):
-		rarity_completion.visible = def.rarity == ChiefMintDefinitionResource.ChiefMintRarity.Completion
+		rarity_completion.visible = (
+			def.rarity
+			== ChiefMintDefinitionResource.ChiefMintRarity.Completion
+		)
 		rarity_options.visible = not rarity_completion.visible
 
 		if def.rarity < ChiefMintDefinitionResource.ChiefMintRarity.Completion:
@@ -155,4 +158,3 @@ func _on_ImageFileDialog_file_selected(path):
 func _on_rarity_selected(index):
 	definition.rarity = index
 	_mark_changed()
-

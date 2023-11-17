@@ -3,8 +3,7 @@ extends Resource
 ## Chief Mint Definitions Resource
 ## List of mint definitions
 
-
-export(Array, Resource) var definitions : Array
+export(Array, Resource) var definitions: Array
 
 
 func _init():
@@ -12,5 +11,5 @@ func _init():
 
 
 # Add support for is_class
-func is_class(name : String) -> bool:
+func is_class(name: String) -> bool:
 	return name == "ChiefMintDefinitionsResource" or .is_class(name)

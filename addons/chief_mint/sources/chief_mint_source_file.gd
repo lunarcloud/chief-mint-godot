@@ -3,11 +3,11 @@ extends ChiefMintSource
 ## Mint Source: File
 ## Chief Mint Source that uses a local saved file as the current state
 
-
 var defPath
 var savePath
 
-var stored_data : ChiefMintSaveResource
+var stored_data: ChiefMintSaveResource
+
 
 func _init():
 	defPath = ProjectSettings.get_setting(ChiefMintConstants.MINT_DEFINITION_SETTING)
@@ -69,7 +69,7 @@ func _save() -> bool:
 		#print("Saved {f}".format({'f': savePath}))
 		return true
 	else:
-		printerr("Failed to save {f}!".format({'f': savePath}))
+		printerr("Failed to save {f}!".format({"f": savePath}))
 		return false
 
 
@@ -105,4 +105,3 @@ func get_progress(name: String) -> ChiefMintProgress:
 		if mint.definition.name == name:
 			return mint.progress
 	return null
-

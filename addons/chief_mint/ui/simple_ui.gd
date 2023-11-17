@@ -5,13 +5,13 @@ extends Control
 
 export var display_time := 2.0
 
-onready var animation_player : AnimationPlayer = $AnimationPlayer
-onready var chief_mints : ChiefMintSingleton = $"/root/ChiefMint"
+onready var animation_player: AnimationPlayer = $AnimationPlayer
+onready var chief_mints: ChiefMintSingleton = $"/root/ChiefMint"
 
-onready var icon : TextureRect = $Panel/HBoxContainer/Container/Icon
-onready var name_label : Label = $Panel/HBoxContainer/VBoxContainer/Name
-onready var description_label : Label = $Panel/HBoxContainer/VBoxContainer/Description
-onready var progressbar : ProgressBar = $Panel/HBoxContainer/VBoxContainer/ProgressBar
+onready var icon: TextureRect = $Panel/HBoxContainer/Container/Icon
+onready var name_label: Label = $Panel/HBoxContainer/VBoxContainer/Name
+onready var description_label: Label = $Panel/HBoxContainer/VBoxContainer/Description
+onready var progressbar: ProgressBar = $Panel/HBoxContainer/VBoxContainer/ProgressBar
 
 var _currentNotify = 0
 
@@ -37,7 +37,7 @@ func notify(res: ChiefMintResource) -> void:
 	_show()
 
 
-func _show(seconds : float = display_time):
+func _show(seconds: float = display_time):
 	if animation_player.current_animation:
 		yield(animation_player, "animation_finished")
 
@@ -52,9 +52,8 @@ func _show(seconds : float = display_time):
 
 func _hide(id: int) -> void:
 	if _currentNotify != id:
-		return # The notification has been replaced
+		return  # The notification has been replaced
 
 	animation_player.play("Hide")
 	yield(animation_player, "animation_finished")
 	animation_player.play("Hidden")
-

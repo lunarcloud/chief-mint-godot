@@ -4,13 +4,7 @@ extends Resource
 ## Resource that contains the information for an achievement (but not it's current progress)
 
 ## Rarity Levels for a Mint
-enum ChiefMintRarity {
-	Common = 0,
-	Uncommon = 1,
-	Rare = 2,
-	Completion = 3
-}
-
+enum ChiefMintRarity { Common = 0, Uncommon = 1, Rare = 2, Completion = 3 }
 
 export var name: String
 
@@ -30,7 +24,7 @@ func _init():
 
 
 # Add support for is_class
-func is_class(name : String) -> bool:
+func is_class(name: String) -> bool:
 	return name == "ChiefMintDefinitionResource" or .is_class(name)
 
 
@@ -46,15 +40,15 @@ static func differences(a: ChiefMintDefinitionResource, b: ChiefMintDefinitionRe
 
 	var differences := []
 	if a.name != b.name:
-		differences.append('name')
+		differences.append("name")
 	if a.description != b.description:
-		differences.append('description')
+		differences.append("description")
 	if a.icon != b.icon:
-		differences.append('icon')
+		differences.append("icon")
 	if a.maximum_progress != b.maximum_progress:
-		differences.append('maximum_progress')
+		differences.append("maximum_progress")
 	if a.display_partial_progress != b.display_partial_progress:
-		differences.append('display_partial_progress')
+		differences.append("display_partial_progress")
 	if a.rarity != b.rarity:
-		differences.append('rarity')
+		differences.append("rarity")
 	return differences

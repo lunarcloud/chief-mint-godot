@@ -3,21 +3,22 @@ extends Panel
 ## Plugin Main Panel
 ## The UI for the Chief Mint editor main window tab
 
-onready var rows : Control = $Vbox/Acheivements/Rows
+onready var rows: Control = $Vbox/Acheivements/Rows
 
 onready var panel = $Vbox/Panel
 
-onready var save_button : Button = $Vbox/Panel/TopUI/SaveButton
+onready var save_button: Button = $Vbox/Panel/TopUI/SaveButton
 
 const Row := preload("res://addons/chief_mint/editor/definition_row.tscn")
 
-var editor_scale := 1.0 setget set_editor_scale # set once by the plugin
+var editor_scale := 1.0 setget set_editor_scale  # set once by the plugin
 
 var definitions: ChiefMintDefinitionsResource
 
-var changed_items : Array = []
+var changed_items: Array = []
 
-signal saved()
+signal saved
+
 
 func reload_from_file():
 	for node in rows.get_children():
@@ -33,7 +34,10 @@ func reload_from_file():
 
 	# Create rows for every definition, checking that there is only one completion rarity
 	for def in definitions.definitions:
-		var this_is_completion : bool = def.rarity == ChiefMintDefinitionResource.ChiefMintRarity.Completion
+		var this_is_completion: bool = (
+			def.rarity
+			== ChiefMintDefinitionResource.ChiefMintRarity.Completion
+		)
 
 		if this_is_completion and has_completion_mint:
 			def.rarity = ChiefMintDefinitionResource.ChiefMintRarity.Common
@@ -44,9 +48,16 @@ func reload_from_file():
 		new_row.set_definition(def)
 
 	# Add a mint at the top if no mints exist
-	if definitions.definitions.size() == 0 \
-		or definitions.definitions.size() == 1 \
-		and definitions.definitions[0].rarity == ChiefMintDefinitionResource.ChiefMintRarity.Completion:
+	if (
+		definitions.definitions.size() == 0
+		or (
+			definitions.definitions.size() == 1
+			and (
+				definitions.definitions[0].rarity
+				== ChiefMintDefinitionResource.ChiefMintRarity.Completion
+			)
+		)
+	):
 		create_tbd_def()
 
 	# Add a completion mint at the top if no completion mints exist
@@ -66,9 +77,9 @@ func set_editor_theme(value: Theme, node = self) -> void:
 		#if c.has_method("set_editor_theme"):
 		#	c.set_editor_theme(value, c)
 		#elif 'editor_theme_icon' in c:
-		if 'editor_theme_icon' in c:
+		if "editor_theme_icon" in c:
 			if not value.has_icon(c.editor_theme_icon, "EditorIcons"):
-				printerr("Icon not found {theme_icon}".format({'theme_icon': c.editor_theme_icon}))
+				printerr("Icon not found {theme_icon}".format({"theme_icon": c.editor_theme_icon}))
 				continue
 			var icon := value.get_icon(c.editor_theme_icon, "EditorIcons")
 			c.icon = icon
@@ -95,10 +106,12 @@ func get_definitions() -> ChiefMintDefinitionsResource:
 	var names_seen := []
 
 	for node in rows.get_children():
-		if 'definition' in node \
-		and node.definition is ChiefMintDefinitionResource \
-		and node.definition.name != "" \
-		and not names_seen.has(node.definition.name):
+		if (
+			"definition" in node
+			and node.definition is ChiefMintDefinitionResource
+			and node.definition.name != ""
+			and not names_seen.has(node.definition.name)
+		):
 			names_seen.append(node.definition.name)
 			out.definitions.append(node.definition)
 
@@ -141,7 +154,7 @@ func _on_SaveButton_pressed():
 		changed_items.clear()
 		save_button.disabled = true
 	else:
-		printerr("Failed to save {f}!".format({'f': savePath}))
+		printerr("Failed to save {f}!".format({"f": savePath}))
 
 
 func _on_def_removed(definition: ChiefMintDefinitionResource) -> void:
@@ -157,4 +170,3 @@ func _on_def_changed(unedited_def: ChiefMintDefinitionResource, has_changes: boo
 		changed_items.append(unedited_def.name)
 
 	save_button.disabled = changed_items.empty()
-
