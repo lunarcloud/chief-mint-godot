@@ -17,6 +17,7 @@
 /icon*     												export-ignore
 /project.godot										export-ignore
 /screenshots        							export-ignore
-/art-sources        							export-ignore
+/art_sources        							export-ignore
 /example_mints      							export-ignore
+/demo_scene		      							export-ignore
 /addons/editor_icon_previewer     export-ignore
