@@ -2,7 +2,7 @@
 
 [ext_resource path="res://addons/chief_mint/ui/simple_ui.gd" type="Script" id=1]
 
-[sub_resource type="ImageTexture" id=1]
+[sub_resource type="ImageTexture" id=7]
 size = Vector2( 64, 64 )
 
 [sub_resource type="Animation" id=4]
@@ -185,7 +185,7 @@ margin_top = 30.0
 margin_right = 64.0
 margin_bottom = 94.0
 size_flags_vertical = 3
-texture = SubResource( 1 )
+texture = SubResource( 7 )
 stretch_mode = 5
 
 [node name="ColorRect" type="ColorRect" parent="Panel/HBoxContainer/Container"]

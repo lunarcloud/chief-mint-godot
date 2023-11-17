@@ -66,7 +66,9 @@ func set_definition(def: ChiefMintDefinitionResource) -> void:
 		description_text_edit.text = def.description 
 		
 	if is_instance_valid(icon_display) and def.icon != null:
-		icon_display.texture.create_from_image(def.icon)
+		var texture = ImageTexture.new()
+		texture.create_from_image(def.icon)
+		icon_display.texture = texture
 		
 	if is_instance_valid(max_progress_spin_box):
 		max_progress_spin_box.value = def.maximum_progress
@@ -137,11 +139,12 @@ func _on_ImageFileDialog_file_selected(path):
 	if not ResourceLoader.exists(path):
 		return
 	
-	var texture = ImageTexture.new()
 	var image = Image.new()
 	image.load(path)
 	definition.icon = image
-	texture.create_from_image(definition.icon)
+	
+	var texture = ImageTexture.new()
+	texture.create_from_image(image)
 	icon_display.texture = texture
 	
 	_mark_changed()
