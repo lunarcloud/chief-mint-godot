@@ -27,8 +27,10 @@ jobs:
       run: |
         echo "Importing project assets..."
         godot --headless --verbose --import --quit 2>&1 | tee import.log
-        if grep -i "error\|failed" import.log; then
+        # Check for actual errors (not just the word "error" in any context)
+        if grep -E "ERROR:|SCRIPT ERROR:|Parse Error:" import.log; then
           echo "::error::Import process encountered errors"
+          cat import.log
           exit 1
         fi
         echo "Import completed successfully"
@@ -37,7 +39,8 @@ jobs:
       run: |
         echo "Building/validating project..."
         godot --headless --verbose --quit 2>&1 | tee build.log
-        if grep -i "SCRIPT ERROR\|Parse Error\|error:" build.log; then
+        # Check for actual errors
+        if grep -E "ERROR:|SCRIPT ERROR:|Parse Error:" build.log; then
           echo "::error::Build validation encountered errors"
           cat build.log
           exit 1
