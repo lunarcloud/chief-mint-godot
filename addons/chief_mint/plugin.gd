@@ -24,14 +24,13 @@ func _define_project_setting(
 ) -> void:
 	# p_default_val can be any type!!
 
-	var property_info: Dictionary = {
-		"name": p_name, "type": p_type, "hint": p_hint, "hint_string": p_hint_string
-	}
-
-	ProjectSettings.add_property_info(property_info)
-	ProjectSettings.set_initial_value(p_name, p_default_val)
 	if not ProjectSettings.has_setting(p_name):
 		ProjectSettings.set_setting(p_name, p_default_val)
+		var property_info: Dictionary = {
+			"name": p_name, "type": p_type, "hint": p_hint, "hint_string": p_hint_string
+		}
+		ProjectSettings.add_property_info(property_info)
+		ProjectSettings.set_initial_value(p_name, p_default_val)
 
 
 func _enter_tree():

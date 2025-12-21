@@ -73,6 +73,8 @@ func reload_from_file():
 
 
 func set_editor_theme(value: Theme, node = self) -> void:
+	if not value:
+		return
 	for c in node.get_children():
 		#if c.has_method("set_editor_theme"):
 		#	c.set_editor_theme(value, c)

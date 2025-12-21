@@ -86,7 +86,9 @@ func set_definition(def: ChiefMintDefinitionResource) -> void:
 		rarity_options.visible = not rarity_completion.visible
 
 		if def.rarity < ChiefMintDefinitionResource.ChiefMintRarity.COMPLETION:
-			rarity_options.select(def.rarity)
+			# Only select if the OptionButton has items
+			if rarity_options.get_item_count() > def.rarity:
+				rarity_options.select(def.rarity)
 		else:
 			$HBoxContainer/InfoContainer/MaxProgressLabel.visible = false
 			max_progress_spin_box.visible = false
