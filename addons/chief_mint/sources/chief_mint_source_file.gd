@@ -65,7 +65,7 @@ static func create_save_from_definitions(
 
 func _save() -> bool:
 	#print("Trying to save {f}".format({'f': save_path}))
-	var err = ResourceSaver.save(save_path, stored_data)
+	var err = ResourceSaver.save(stored_data, save_path)
 	if err == OK:
 		#print("Saved {f}".format({'f': save_path}))
 		return true

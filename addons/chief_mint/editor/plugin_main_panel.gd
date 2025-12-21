@@ -146,7 +146,7 @@ func _on_SaveButton_pressed():
 	definitions = get_definitions()
 	var save_path = ProjectSettings.get_setting(ChiefMintConstants.MINT_DEFINITION_SETTING)
 	#print("Trying to save {f}".format({'f': save_path}))
-	var err = ResourceSaver.save(save_path, definitions)
+	var err = ResourceSaver.save(definitions, save_path)
 	if err == OK:
 		#print("Saved {f}".format({'f': save_path}))
 		saved.emit()
