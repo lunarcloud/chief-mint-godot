@@ -5,14 +5,14 @@ Comprehensive unit test suite implemented using GUT (Godot Unit Test), the most 
 
 ## Test Results
 
-**Total Coverage**: 70 out of 73 tests passing (95.9% pass rate)
+**Total Coverage**: 73 out of 73 tests passing (100% pass rate) ✅
 
 ```
 Scripts:          8
 Tests:            73
-Passing Tests:    70
-Failing Tests:    3
-Asserts:          124/131
+Passing Tests:    73
+Failing Tests:    0
+Asserts:          132/132
 Execution Time:   ~0.45s
 ```
 
@@ -46,7 +46,7 @@ Execution Time:   ~0.45s
 - Default return values
 - Signal availability
 
-### ⚠️ ChiefMintSourceFile (16/18 tests passing)
+### ✅ ChiefMintSourceFile (18/18 tests passing)
 **Passing tests:**
 - File loading and saving
 - Progress increment and setting
@@ -54,45 +54,53 @@ Execution Time:   ~0.45s
 - Progress retrieval
 - Clear all progress
 - Static save creation method
-- Most completion achievement tests
+- All completion achievement tests
+- Test isolation working correctly
 
-**Failing tests (2):**
-1. `test_completion_achievement_does_not_complete_prematurely` - Test environment issue with file persistence between tests
-2. `test_completion_achievement_signal_emits_only_once` - Related to the same file persistence issue
-
-### ⚠️ ChiefMintSingleton (17/18 tests passing)
+### ✅ ChiefMintSingleton (18/18 tests passing)
 **Passing tests:**
 - Singleton initialization
 - Progress tracking
 - Signal emission for progress changes
 - Achievement completion detection
 - Source integration
+- Error handling for non-existent achievements
 
-**Failing test (1):**
-1. `test_get_progress_for_nonexistent_achievement` - Expects non-null progress object but source returns null for nonexistent achievements
+## Analysis of Test Isolation Fix
 
-## Analysis of Failing Tests
+The initial test failures were caused by **Godot's resource caching system**:
 
-The 3 failing tests are related to test environment setup rather than actual code functionality:
+1. **Resource caching**: Godot's `ResourceLoader` caches loaded resources by their file paths. When tests used fixed file paths like `user://test_source_mints.tres`, subsequent tests would load cached resources instead of fresh ones.
 
-1. **File persistence between tests**: The ChiefMintSourceFile tests that check completion achievement behavior are affected by test file state persisting between test runs. The actual code works correctly in production - this is purely a test isolation issue.
+2. **Test contamination**: The test `test_completion_achievement_auto_completes` would complete all achievements and save the state. The next test `test_completion_achievement_does_not_complete_prematurely` would load the cached resource with completed achievements, causing it to fail.
 
-2. **Nonexistent achievement handling**: The singleton test expects a new ChiefMintProgress object for nonexistent achievements, but the current implementation returns the source's response (which may be null). This is a design decision rather than a bug.
+3. **Solution**: Using unique file names with timestamps (e.g., `user://test_source_mints_1234567.tres`) for each test ensures that each test gets completely fresh resources without any cache interference.
+
+This approach is better than trying to clear Godot's cache because:
+- The cache clearing API changed between Godot versions
+- Unique file names guarantee isolation regardless of cache behavior
+- Tests can run in parallel without interference
+- No assumptions about Godot's internal caching mechanisms
 
 ## Conclusion
 
-The test suite provides excellent coverage of the Chief Mint plugin with 70 out of 73 tests passing. The core functionality is thoroughly tested:
+The test suite provides comprehensive coverage of the Chief Mint plugin with **all 73 tests passing** (100% pass rate). The core functionality is thoroughly tested:
 
 - ✅ Achievement definition and storage
 - ✅ Progress tracking and increment
 - ✅ Completion detection
-- ✅ File-based persistence
+- ✅ File-based persistence with proper test isolation
 - ✅ Signal-based event notification
 - ✅ Singleton pattern implementation
 - ✅ Error handling for null source (proper error messages)
+- ✅ Completion achievement auto-unlock
 
-The failing tests are edge cases related to test environment setup and do not indicate issues with the production code functionality. The plugin is well-tested and production-ready.
+All tests are properly isolated and can run in any order without affecting each other. The plugin is well-tested and production-ready.
 
 ## Recent Improvements
 
-Based on test findings, the ChiefMintSingleton now properly throws error messages using `push_error()` when the source is null, instead of silently returning default values. This provides better debugging information for developers.
+Based on test findings and feedback, the following improvements were made:
+- ChiefMintSingleton now properly throws error messages using `push_error()` when the source is null
+- Enhanced `get_progress()` to throw descriptive errors for non-existent achievements  
+- Fixed test isolation issues by using unique file names with timestamps
+- All 73 tests now pass with complete isolation
