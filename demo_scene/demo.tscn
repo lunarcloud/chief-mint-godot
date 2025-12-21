@@ -14,9 +14,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -314.0
-offset_top = -152.0
+offset_top = -190.0
 offset_right = -24.0
-offset_bottom = 153.0
+offset_bottom = 190.0
 custom_constants/separation = 24
 
 [node name="RareEventButton" type="Button" parent="VBoxContainer"]
@@ -47,6 +47,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Clear Local Progress"
 
+[node name="TriggerMultipleButton" type="Button" parent="VBoxContainer"]
+offset_top = 329.0
+offset_right = 290.0
+offset_bottom = 388.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Trigger Multiple (Test Queue)"
+
 [node name="Label" type="Label" parent="."]
 anchor_left = 0.5
 anchor_top = 0.25
@@ -67,3 +75,4 @@ valign = 1
 [connection signal="pressed" from="VBoxContainer/HatTrickProgressButton" to="." method="_on_HatTrickProgressButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/CommonEventButton" to="." method="_on_CommonEventButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/ClearLocalButton" to="." method="_on_ClearLocalButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/TriggerMultipleButton" to="." method="_on_TriggerMultipleButton_pressed"]

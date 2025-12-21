@@ -22,3 +22,10 @@ func _on_ClearLocalButton_pressed():
 	if not chief_mints.clear_all_progress():
 		OS.alert("Couldn't clear the acheivements!", 'Clear Error')
 
+
+func _on_TriggerMultipleButton_pressed():
+	# Trigger multiple achievements in quick succession to test the queue
+	chief_mints.increment_progress("Rare Event")
+	chief_mints.increment_progress("Hat Trick")
+	chief_mints.increment_progress("commonish")
+
