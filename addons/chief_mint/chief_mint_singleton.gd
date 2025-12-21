@@ -53,6 +53,7 @@ func increment_progress(name: String) -> void:
 		var changed = old_progress != resource.progress.current
 		if changed:
 			progress_changed.emit(resource)
+			_check_completion_achievements()
 
 
 ## Force the progress of a mint to a specific value (optional for source to implement)
@@ -63,6 +64,37 @@ func set_progress(name: String, value) -> void:
 		var changed = old_progress != resource.progress.current
 		if changed:
 			progress_changed.emit(resource)
+			_check_completion_achievements()
+
+
+## Check if all non-completion achievements are complete and trigger completion achievements
+func _check_completion_achievements() -> void:
+	if source == null or state == null:
+		return
+
+	# Find all completion achievements and non-completion achievements
+	var completion_mints = []
+	var non_completion_mints = []
+
+	for mint in state.mints:
+		if mint.definition != null:
+			if mint.definition.rarity == ChiefMintDefinitionResource.ChiefMintRarity.COMPLETION:
+				completion_mints.append(mint)
+			else:
+				non_completion_mints.append(mint)
+
+	# Check if all non-completion achievements are complete
+	var all_complete = true
+	for mint in non_completion_mints:
+		if not mint.progress.is_complete():
+			all_complete = false
+			break
+
+	# If all non-completion achievements are complete, complete all completion achievements
+	if all_complete:
+		for mint in completion_mints:
+			if not mint.progress.is_complete():
+				source.set_progress(mint.definition.name, mint.progress.maximum)
 
 
 ## Get whether the mint is considered achieved

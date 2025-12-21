@@ -36,6 +36,13 @@ func _enter_tree():
 	icon_display = $HBoxContainer/IconContainer/ImageDisplay/ImageTexture
 	changes_label = $HBoxContainer/InfoContainer/TopRightArea/ChangesLabel
 
+	# Populate RarityOptions in Godot 4
+	if rarity_options.get_item_count() == 0:
+		rarity_options.clear()
+		rarity_options.add_icon_item(load("res://addons/chief_mint/icon/rarity/common.png"), "")
+		rarity_options.add_icon_item(load("res://addons/chief_mint/icon/rarity/uncommon.png"), "")
+		rarity_options.add_icon_item(load("res://addons/chief_mint/icon/rarity/rare.png"), "")
+
 
 func set_editor_scale(value: float) -> void:
 	custom_minimum_size *= value
