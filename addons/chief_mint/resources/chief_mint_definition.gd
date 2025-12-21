@@ -26,7 +26,7 @@ func _init():
 
 # Add support for is_class
 func is_class(name: String) -> bool:
-	return name == "ChiefMintDefinitionResource" or .is_class(name)
+	return name == "ChiefMintDefinitionResource" or super.is_class(name)
 
 
 ## Compare two mint instances, receive a list of the differences

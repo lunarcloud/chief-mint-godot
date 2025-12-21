@@ -13,4 +13,4 @@ func _init():
 
 # Add support for is_class
 func is_class(name: String) -> bool:
-	return name == "ChiefMintDefinitionsResource" or .is_class(name)
+	return name == "ChiefMintDefinitionsResource" or super.is_class(name)

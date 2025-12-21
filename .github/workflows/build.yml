@@ -16,7 +16,7 @@ jobs:
     - name: Setup Godot
       uses: chickensoft-games/setup-godot@v2
       with:
-        version: 4.3.0
+        version: 4.5.0
         use-dotnet: false
         
     - name: Verify Godot Installation
@@ -34,3 +34,21 @@ jobs:
         echo "Building/validating project..."
         godot --headless --verbose --quit
         echo "Project build validation completed successfully"
+        
+    - name: Create Build Artifacts
+      run: |
+        echo "Creating build artifacts..."
+        mkdir -p build
+        # Copy addon files to build directory
+        cp -r addons build/
+        cp project.godot build/
+        cp icon.png build/
+        cp README.md build/
+        echo "Build artifacts created successfully"
+        
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: chief-mint-godot-build
+        path: build/
+        retention-days: 30
