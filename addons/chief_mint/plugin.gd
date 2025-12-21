@@ -2,16 +2,17 @@
 class_name ChiefMintPlugin
 extends EditorPlugin
 
-# Load icon lazily after import
-var Icon: Texture2D
 const MainPanel = preload("res://addons/chief_mint/editor/plugin_main_panel.tscn")
+
+# Load icon lazily after import
+var icon: Texture2D
 
 var main_panel_instance
 
 func _get_icon() -> Texture2D:
-	if not Icon:
-		Icon = load("res://addons/chief_mint/icon/icon-small-grey.png")
-	return Icon
+	if not icon:
+		icon = load("res://addons/chief_mint/icon/icon-small-grey.png")
+	return icon
 
 
 func _define_project_setting(
