@@ -122,8 +122,7 @@ func _check_completion_achievements() -> void:
 	# If all non-completion achievements are complete, complete all completion achievements
 	if all_complete:
 		for mint in completion_mints:
-			if not mint.progress.is_complete():
-				mint.progress.current = mint.progress.maximum
+			mint.progress.current = mint.progress.maximum
 		_save()
 
 
