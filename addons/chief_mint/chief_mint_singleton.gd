@@ -68,7 +68,12 @@ func increment_progress(name: String) -> void:
 		return
 	
 	if !is_complete(name):
-		var old_progress: int = source.get_progress(name).current
+		var progress = source.get_progress(name)
+		if progress == null:
+			push_error("ChiefMint: Cannot increment progress - achievement '%s' not found" % name)
+			return
+		
+		var old_progress: int = progress.current
 		var resource = source.increment_progress(name)
 		var changed = old_progress != resource.progress.current
 		if changed:
@@ -81,7 +86,12 @@ func set_progress(name: String, value) -> void:
 		push_error("ChiefMint: Cannot set progress - source is null")
 		return
 	
-	var old_progress: int = source.get_progress(name).current
+	var progress = source.get_progress(name)
+	if progress == null:
+		push_error("ChiefMint: Cannot set progress - achievement '%s' not found" % name)
+		return
+	
+	var old_progress: int = progress.current
 	var resource = source.set_progress(name, value)
 	var changed = old_progress != resource.progress.current
 	if changed:
