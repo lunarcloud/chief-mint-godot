@@ -1,0 +1,2 @@
+# This file tells Godot to ignore the .github directory
+# The .github directory contains CI/CD configuration and should not be imported by Godot
