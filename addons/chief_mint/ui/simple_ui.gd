@@ -6,6 +6,8 @@ extends Control
 @export var display_time := 2.0
 
 var _current_notify = 0
+var _notification_queue: Array[ChiefMintResource] = []
+var _is_displaying := false
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var chief_mints: ChiefMintSingleton = $"/root/ChiefMint"
@@ -25,18 +27,66 @@ func notify(res: ChiefMintResource) -> void:
 		push_warning("Notified about null mint")
 		return
 
-	name_label.text = res.definition.name
-	description_label.text = res.definition.description
+	# Remove any existing notification for this achievement (keep only the latest state)
+	for i in range(_notification_queue.size() - 1, -1, -1):
+		if _notification_queue[i].definition.name == res.definition.name:
+			_notification_queue.remove_at(i)
 
-	if res.definition.icon != null:
-		var texture = ImageTexture.create_from_image(res.definition.icon)
-		icon.texture = texture
+	# Check if this is a completion achievement
+	var is_completion = (
+		res.definition != null
+		and res.definition.rarity == ChiefMintDefinitionResource.ChiefMintRarity.COMPLETION
+	)
 
-	progressbar.visible = res.progress.maximum > 1
-	progressbar.max_value = res.progress.maximum
-	progressbar.value = res.progress.current
+	if is_completion:
+		# Completion achievements always go to the end of the queue
+		_notification_queue.append(res)
+	else:
+		# Regular achievements: insert before any completion achievement
+		var completion_index = -1
+		for i in range(_notification_queue.size()):
+			var queue_item = _notification_queue[i]
+			var is_completion_in_queue = (
+				queue_item.definition.rarity == ChiefMintDefinitionResource.ChiefMintRarity.COMPLETION
+			)
+			if is_completion_in_queue:
+				completion_index = i
+				break
 
-	_show()
+		if completion_index >= 0:
+			# Insert before the completion achievement
+			_notification_queue.insert(completion_index, res)
+		else:
+			# No completion achievement in queue, just append
+			_notification_queue.append(res)
+
+	# Start processing the queue if not already displaying
+	if not _is_displaying:
+		_process_queue()
+
+
+func _process_queue() -> void:
+	_is_displaying = true
+
+	while _notification_queue.size() > 0:
+		var res: ChiefMintResource = _notification_queue.pop_front()
+
+		# Update UI with the current achievement
+		name_label.text = res.definition.name
+		description_label.text = res.definition.description
+
+		if res.definition.icon != null:
+			var texture = ImageTexture.create_from_image(res.definition.icon)
+			icon.texture = texture
+
+		progressbar.visible = res.progress.maximum > 1
+		progressbar.max_value = res.progress.maximum
+		progressbar.value = res.progress.current
+
+		# Display the achievement
+		await _show()
+
+	_is_displaying = false
 
 
 func _show(seconds: float = display_time):
@@ -49,7 +99,7 @@ func _show(seconds: float = display_time):
 	animation_player.play("Show")
 	await animation_player.animation_finished
 	await get_tree().create_timer(seconds).timeout
-	_hide(id)
+	await _hide(id)
 
 
 func _hide(id: int) -> void:

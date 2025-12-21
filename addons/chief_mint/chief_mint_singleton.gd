@@ -17,6 +17,10 @@ func _ready():
 	else:
 		source = load(source_path).new()
 
+	# Connect to completion achievement signal
+	if source != null:
+		source.completion_achievement_unlocked.connect(_on_completion_achievement_unlocked)
+
 	load_from_source()
 
 
@@ -73,3 +77,8 @@ func is_complete(name: String) -> bool:
 ## Get the progress towards the completion of a mint
 func get_progress(name: String) -> ChiefMintProgress:
 	return ChiefMintProgress.new() if source == null else source.get_progress(name)
+
+
+## Handle completion achievement unlocked signal from source
+func _on_completion_achievement_unlocked(completion_mint: ChiefMintResource) -> void:
+	progress_changed.emit(completion_mint)
