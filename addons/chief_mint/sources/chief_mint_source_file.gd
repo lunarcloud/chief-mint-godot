@@ -101,14 +101,14 @@ func _check_completion_achievements() -> void:
 	if stored_data == null:
 		return
 
-	# Find all completion achievements and non-completion achievements
-	var completion_mints = []
-	var non_completion_mints = []
+	# Find the single completion achievement and all non-completion achievements
+	var completion_mint: ChiefMintResource = null
+	var non_completion_mints: Array[ChiefMintResource] = []
 
 	for mint in stored_data.mints:
 		if mint.definition != null:
 			if mint.definition.rarity == ChiefMintDefinitionResource.ChiefMintRarity.COMPLETION:
-				completion_mints.append(mint)
+				completion_mint = mint
 			else:
 				non_completion_mints.append(mint)
 
@@ -119,10 +119,9 @@ func _check_completion_achievements() -> void:
 			all_complete = false
 			break
 
-	# If all non-completion achievements are complete, complete all completion achievements
-	if all_complete:
-		for mint in completion_mints:
-			mint.progress.current = mint.progress.maximum
+	# If all non-completion achievements are complete, complete the completion achievement
+	if all_complete and completion_mint != null:
+		completion_mint.progress.current = completion_mint.progress.maximum
 		_save()
 
 

@@ -50,27 +50,21 @@ func increment_progress(name: String) -> void:
 	if source != null and !is_complete(name):
 		var old_progress: int = source.get_progress(name).current
 
-		# Track completion achievements before the increment
-		var completion_achievements_before = _get_incomplete_completion_achievements()
+		# Check if completion achievement is incomplete before the increment
+		var completion_mint = _get_completion_mint()
+		var completion_was_incomplete = false
+		if completion_mint != null:
+			completion_was_incomplete = not completion_mint.progress.is_complete()
 
 		var resource = source.increment_progress(name)
 		var changed = old_progress != resource.progress.current
 		if changed:
 			progress_changed.emit(resource)
 
-			# Check for newly completed completion achievements
-			var completion_achievements_after = _get_incomplete_completion_achievements()
-			# Convert to dictionary for O(1) lookup
-			var after_dict = {}
-			for mint_name in completion_achievements_after:
-				after_dict[mint_name] = true
-
-			for mint_name in completion_achievements_before:
-				if not after_dict.has(mint_name):
-					# This completion achievement just became complete
-					var completed_mint = _get_mint_by_name(mint_name)
-					if completed_mint != null:
-						progress_changed.emit(completed_mint)
+			# Check if completion achievement just became complete
+			if completion_was_incomplete and completion_mint != null:
+				if completion_mint.progress.is_complete():
+					progress_changed.emit(completion_mint)
 
 
 ## Force the progress of a mint to a specific value (optional for source to implement)
@@ -93,30 +87,17 @@ func get_progress(name: String) -> ChiefMintProgress:
 	return ChiefMintProgress.new() if source == null else source.get_progress(name)
 
 
-## Get list of incomplete completion achievement names
-func _get_incomplete_completion_achievements() -> Array[String]:
-	var incomplete: Array[String] = []
-	if source == null or state == null:
-		return incomplete
-
-	for mint in state.mints:
-		var is_completion_rarity = (
-			mint.definition != null
-			and mint.definition.rarity == ChiefMintDefinitionResource.ChiefMintRarity.COMPLETION
-		)
-		if is_completion_rarity and not mint.progress.is_complete():
-			incomplete.append(mint.definition.name)
-
-	return incomplete
-
-
-## Get a mint resource by name
-func _get_mint_by_name(mint_name: String) -> ChiefMintResource:
+## Get the single completion achievement
+func _get_completion_mint() -> ChiefMintResource:
 	if source == null or state == null:
 		return null
 
 	for mint in state.mints:
-		if mint.definition != null and mint.definition.name == mint_name:
+		var is_completion = (
+			mint.definition != null
+			and mint.definition.rarity == ChiefMintDefinitionResource.ChiefMintRarity.COMPLETION
+		)
+		if is_completion:
 			return mint
 
 	return null
