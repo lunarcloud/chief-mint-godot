@@ -2,12 +2,17 @@ extends GutTest
 ## Unit tests for ChiefMintSourceFile
 
 var source: ChiefMintSourceFile
-var test_save_path: String = "user://test_source_mints.tres"
-var test_def_path: String = "user://test_source_defs.tres"
+var test_save_path: String
+var test_def_path: String
 
 
 func before_each():
-	# Clean up any existing test files first
+	# Use unique file names for each test to avoid caching issues
+	var random_suffix = str(Time.get_ticks_msec())
+	test_save_path = "user://test_source_mints_%s.tres" % random_suffix
+	test_def_path = "user://test_source_defs_%s.tres" % random_suffix
+
+	# Clean up any existing test files
 	if FileAccess.file_exists(test_save_path):
 		DirAccess.remove_absolute(test_save_path)
 	if FileAccess.file_exists(test_def_path):

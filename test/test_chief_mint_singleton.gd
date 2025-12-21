@@ -2,12 +2,17 @@ extends GutTest
 ## Unit tests for ChiefMintSingleton
 
 var singleton: ChiefMintSingleton
-var test_save_path: String = "user://test_singleton_mints.tres"
+var test_save_path: String
 var test_def_path: String
 
 
 func before_each():
-	# Clean up any existing test files first
+	# Use unique file names for each test to avoid caching issues
+	var random_suffix = str(Time.get_ticks_msec())
+	test_save_path = "user://test_singleton_mints_%s.tres" % random_suffix
+	test_def_path = "user://test_singleton_defs_%s.tres" % random_suffix
+
+	# Clean up any existing test files
 	if FileAccess.file_exists(test_save_path):
 		DirAccess.remove_absolute(test_save_path)
 	if FileAccess.file_exists(test_def_path):
@@ -40,7 +45,6 @@ func before_each():
 	defs_array.append(def3)
 	defs.definitions = defs_array
 
-	test_def_path = "user://test_singleton_defs.tres"
 	ResourceSaver.save(defs, test_def_path)
 
 	# Set project settings to use our test files
