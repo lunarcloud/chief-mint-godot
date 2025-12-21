@@ -45,7 +45,7 @@ func set_editor_scale(value: float) -> void:
 
 
 func _on_SubtractButton_pressed():
-	emit_signal("definition_removed", definition)
+	definition_removed.emit(definition)
 	call_deferred("queue_free")
 
 
@@ -105,7 +105,7 @@ func _mark_changed() -> void:
 	var has_changes = diffs.size() > 0
 
 	changes_label.visible_characters = 0 if not has_changes else 1
-	emit_signal("definition_changed", unedited, has_changes)
+	definition_changed.emit(unedited, has_changes)
 	#print(str("editing result, diffs:", diffs))
 
 

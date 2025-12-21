@@ -149,7 +149,7 @@ func _on_SaveButton_pressed():
 	var err = ResourceSaver.save(save_path, definitions)
 	if err == OK:
 		#print("Saved {f}".format({'f': save_path}))
-		emit_signal("saved")
+		saved.emit()
 		changed_items.clear()
 		save_button.disabled = true
 	else:
