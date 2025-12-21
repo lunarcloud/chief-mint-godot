@@ -76,7 +76,7 @@ func set_definition(def: ChiefMintDefinitionResource) -> void:
 		max_progress_spin_box.value = def.maximum_progress
 
 	if is_instance_valid(partial_progress_check_box):
-		partial_progress_check_box.pressed = def.display_partial_progress
+		partial_progress_check_box.button_pressed = def.display_partial_progress
 
 	if is_instance_valid(rarity_completion) and is_instance_valid(rarity_options):
 		rarity_completion.visible = (

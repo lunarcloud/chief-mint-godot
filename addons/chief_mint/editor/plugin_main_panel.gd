@@ -168,4 +168,4 @@ func _on_def_changed(unedited_def: ChiefMintDefinitionResource, has_changes: boo
 	elif has_changes and not changed_items.has(unedited_def.name):
 		changed_items.append(unedited_def.name)
 
-	save_button.disabled = changed_items.empty()
+	save_button.disabled = changed_items.is_empty()
