@@ -89,5 +89,10 @@ The test suite provides excellent coverage of the Chief Mint plugin with 70 out 
 - ✅ File-based persistence
 - ✅ Signal-based event notification
 - ✅ Singleton pattern implementation
+- ✅ Error handling for null source (proper error messages)
 
 The failing tests are edge cases related to test environment setup and do not indicate issues with the production code functionality. The plugin is well-tested and production-ready.
+
+## Recent Improvements
+
+Based on test findings, the ChiefMintSingleton now properly throws error messages using `push_error()` when the source is null, instead of silently returning default values. This provides better debugging information for developers.

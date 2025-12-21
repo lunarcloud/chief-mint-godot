@@ -14,7 +14,9 @@ This project uses **GUT (Godot Unit Test)** - the most popular testing framework
 
 To run tests:
 - **In Godot Editor**: Open the GUT panel and click "Run All"
-- **Command line**: `godot --path . --headless -s addons/gut/gut_cmdln.gd`
+- **Command line**: 
+  1. First import the project: `godot --path . --headless --import`
+  2. Then run tests: `godot --path . --headless -s addons/gut/gut_cmdln.gd`
 
 See [TESTING.md](TESTING.md) for detailed testing documentation.
 

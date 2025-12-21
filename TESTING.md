@@ -24,8 +24,14 @@ The GUT framework is already included in the `addons/gut/` directory. To enable 
 
 ### From Command Line
 
-You can run tests headlessly from the command line:
+You can run tests headlessly from the command line. This is a 2-step process:
 
+**Step 1: Import the project** (required on first run or after adding new files)
+```bash
+godot --path . --headless --import
+```
+
+**Step 2: Run the tests**
 ```bash
 godot --path . --headless -s addons/gut/gut_cmdln.gd
 ```
@@ -167,6 +173,9 @@ test:
       run: |
         wget https://downloads.tuxfamily.org/godotengine/4.5/Godot_v4.5-stable_linux.x86_64.zip
         unzip Godot_v4.5-stable_linux.x86_64.zip
+    - name: Import Project
+      run: |
+        ./Godot_v4.5-stable_linux.x86_64 --path . --headless --import
     - name: Run Tests
       run: |
         ./Godot_v4.5-stable_linux.x86_64 --path . --headless -s addons/gut/gut_cmdln.gd
