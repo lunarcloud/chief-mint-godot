@@ -17,6 +17,10 @@ func _ready():
 	else:
 		source = load(source_path).new()
 
+	# Connect to completion achievement signal
+	if source != null:
+		source.completion_achievement_unlocked.connect(_on_completion_achievement_unlocked)
+
 	load_from_source()
 
 
@@ -49,22 +53,10 @@ func get_source_name() -> String:
 func increment_progress(name: String) -> void:
 	if source != null and !is_complete(name):
 		var old_progress: int = source.get_progress(name).current
-
-		# Check if completion achievement is incomplete before the increment
-		var completion_mint = _get_completion_mint()
-		var completion_was_incomplete = false
-		if completion_mint != null:
-			completion_was_incomplete = not completion_mint.progress.is_complete()
-
 		var resource = source.increment_progress(name)
 		var changed = old_progress != resource.progress.current
 		if changed:
 			progress_changed.emit(resource)
-
-			# Check if completion achievement just became complete
-			if completion_was_incomplete and completion_mint != null:
-				if completion_mint.progress.is_complete():
-					progress_changed.emit(completion_mint)
 
 
 ## Force the progress of a mint to a specific value (optional for source to implement)
@@ -87,17 +79,6 @@ func get_progress(name: String) -> ChiefMintProgress:
 	return ChiefMintProgress.new() if source == null else source.get_progress(name)
 
 
-## Get the single completion achievement
-func _get_completion_mint() -> ChiefMintResource:
-	if source == null or state == null:
-		return null
-
-	for mint in state.mints:
-		var is_completion = (
-			mint.definition != null
-			and mint.definition.rarity == ChiefMintDefinitionResource.ChiefMintRarity.COMPLETION
-		)
-		if is_completion:
-			return mint
-
-	return null
+## Handle completion achievement unlocked signal from source
+func _on_completion_achievement_unlocked(completion_mint: ChiefMintResource) -> void:
+	progress_changed.emit(completion_mint)

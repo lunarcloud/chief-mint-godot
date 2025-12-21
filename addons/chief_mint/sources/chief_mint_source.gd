@@ -3,6 +3,9 @@ extends Node
 ## Chief Mint Source
 ## Base Class that Chief Mint sources must implement.
 
+## Emitted when a completion achievement is automatically completed
+signal completion_achievement_unlocked(ChiefMintResource)
+
 
 func get_source_name() -> String:
 	return "none"

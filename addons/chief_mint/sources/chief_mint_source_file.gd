@@ -121,8 +121,12 @@ func _check_completion_achievements() -> void:
 
 	# If all non-completion achievements are complete, complete the completion achievement
 	if all_complete and completion_mint != null:
-		completion_mint.progress.current = completion_mint.progress.maximum
-		_save()
+		var was_incomplete = not completion_mint.progress.is_complete()
+		if was_incomplete:
+			completion_mint.progress.current = completion_mint.progress.maximum
+			_save()
+			# Emit signal to notify that completion achievement was unlocked
+			completion_achievement_unlocked.emit(completion_mint)
 
 
 func is_complete(name: String) -> bool:
