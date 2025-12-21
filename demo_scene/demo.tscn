@@ -58,7 +58,7 @@ offset_right = 136.0
 offset_bottom = -6.0
 text = "Push Buttons to emulate 
 gameplay actions"
-align = 1
+horizontal_alignment = 1
 valign = 1
 
 [node name="ChiefMintSimpleUi" parent="." instance=ExtResource("2")]

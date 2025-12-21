@@ -84,7 +84,6 @@ func set_editor_theme(value: Theme, node = self) -> void:
 			var icon := value.get_icon(c.editor_theme_icon, "EditorIcons")
 			c.icon = icon
 			c.text = ""
-			c.alignment = HORIZONTAL_ALIGNMENT_CENTER
 		else:
 			self.set_editor_theme(value, c)
 

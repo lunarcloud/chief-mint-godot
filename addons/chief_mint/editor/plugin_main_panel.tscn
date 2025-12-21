@@ -84,7 +84,7 @@ custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_outline_modulate = Color( 0.745098, 0.764706, 0.290196, 1 )
 custom_colors/font_color_shadow = Color( 0.164706, 0.14902, 0.0117647, 1 )
 text = "Game Acheivements"
-align = 1
+horizontal_alignment = 1
 valign = 1
 clip_text = true
 
