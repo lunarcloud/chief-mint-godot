@@ -6,6 +6,8 @@ extends Control
 @export var display_time := 2.0
 
 var _current_notify = 0
+var _notification_queue: Array[ChiefMintResource] = []
+var _is_displaying := false
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var chief_mints: ChiefMintSingleton = $"/root/ChiefMint"
@@ -25,18 +27,36 @@ func notify(res: ChiefMintResource) -> void:
 		push_warning("Notified about null mint")
 		return
 
-	name_label.text = res.definition.name
-	description_label.text = res.definition.description
+	# Add the achievement to the queue
+	_notification_queue.append(res)
+	
+	# Start processing the queue if not already displaying
+	if not _is_displaying:
+		_process_queue()
 
-	if res.definition.icon != null:
-		var texture = ImageTexture.create_from_image(res.definition.icon)
-		icon.texture = texture
 
-	progressbar.visible = res.progress.maximum > 1
-	progressbar.max_value = res.progress.maximum
-	progressbar.value = res.progress.current
+func _process_queue() -> void:
+	_is_displaying = true
+	
+	while _notification_queue.size() > 0:
+		var res: ChiefMintResource = _notification_queue.pop_front()
+		
+		# Update UI with the current achievement
+		name_label.text = res.definition.name
+		description_label.text = res.definition.description
 
-	_show()
+		if res.definition.icon != null:
+			var texture = ImageTexture.create_from_image(res.definition.icon)
+			icon.texture = texture
+
+		progressbar.visible = res.progress.maximum > 1
+		progressbar.max_value = res.progress.maximum
+		progressbar.value = res.progress.current
+		
+		# Display the achievement
+		await _show()
+	
+	_is_displaying = false
 
 
 func _show(seconds: float = display_time):
