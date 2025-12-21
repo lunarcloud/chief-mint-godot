@@ -29,5 +29,5 @@ jobs:
     - name: Run gdlint
       run: |
         # Find all .gd files and run gdlint on them, excluding third-party addons
-        find . -name "*.gd" -type f ! -path "./.godot/*" ! -path "./.git/*" ! -path "./addons/editor_icon_previewer/*" -print0 | xargs -0 gdlint || true
-        echo "GDScript linting completed"
+        find . -name "*.gd" -type f ! -path "./.godot/*" ! -path "./.git/*" ! -path "./addons/editor_icon_previewer/*" -print0 | xargs -0 gdlint
+        echo "GDScript linting completed successfully"

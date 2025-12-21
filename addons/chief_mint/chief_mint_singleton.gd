@@ -3,19 +3,19 @@ extends Node
 ## Chief Mint Singleton
 ## The singleton which manages and is used to facilitate achievement usage in-game.
 
-var state: ChiefMintSaveResource
-var source: ChiefMintSource
-
 signal loaded_from_source
 signal progress_changed(ChiefMintResource)
 
+var state: ChiefMintSaveResource
+var source: ChiefMintSource
+
 
 func _ready():
-	var sourcePath = ProjectSettings.get_setting(ChiefMintConstants.MINT_SOURCE_SETTING)
-	if sourcePath == null or not ResourceLoader.exists(sourcePath):
+	var source_path = ProjectSettings.get_setting(ChiefMintConstants.MINT_SOURCE_SETTING)
+	if source_path == null or not ResourceLoader.exists(source_path):
 		source = load(ChiefMintConstants.MINT_SOURCE_DEFAULT).new()
 	else:
-		source = load(sourcePath).new()
+		source = load(source_path).new()
 
 	load_from_source()
 
