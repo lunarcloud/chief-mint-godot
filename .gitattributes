@@ -6,3 +6,5 @@
 /addons    								!export-ignore
 /addons/chief_mint 				!export-ignore
 /addons/chief_mint/**/* 	!export-ignore
+
+/.github								export-ignore
