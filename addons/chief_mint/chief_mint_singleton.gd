@@ -49,10 +49,23 @@ func get_source_name() -> String:
 func increment_progress(name: String) -> void:
 	if source != null and !is_complete(name):
 		var old_progress: int = source.get_progress(name).current
+
+		# Track completion achievements before the increment
+		var completion_achievements_before = _get_incomplete_completion_achievements()
+
 		var resource = source.increment_progress(name)
 		var changed = old_progress != resource.progress.current
 		if changed:
 			progress_changed.emit(resource)
+
+			# Check for newly completed completion achievements
+			var completion_achievements_after = _get_incomplete_completion_achievements()
+			for mint_name in completion_achievements_before:
+				if mint_name not in completion_achievements_after:
+					# This completion achievement just became complete
+					var completed_mint = _get_mint_by_name(mint_name)
+					if completed_mint != null:
+						progress_changed.emit(completed_mint)
 
 
 ## Force the progress of a mint to a specific value (optional for source to implement)
@@ -73,3 +86,33 @@ func is_complete(name: String) -> bool:
 ## Get the progress towards the completion of a mint
 func get_progress(name: String) -> ChiefMintProgress:
 	return ChiefMintProgress.new() if source == null else source.get_progress(name)
+
+
+## Get list of incomplete completion achievement names
+func _get_incomplete_completion_achievements() -> Array[String]:
+	var incomplete: Array[String] = []
+	if source == null or state == null:
+		return incomplete
+
+	for mint in state.mints:
+		var is_completion = (
+			mint.definition != null
+			and mint.definition.rarity == ChiefMintDefinitionResource.ChiefMintRarity.COMPLETION
+		)
+		if is_completion:
+			if not mint.progress.is_complete():
+				incomplete.append(mint.definition.name)
+
+	return incomplete
+
+
+## Get a mint resource by name
+func _get_mint_by_name(mint_name: String) -> ChiefMintResource:
+	if source == null or state == null:
+		return null
+
+	for mint in state.mints:
+		if mint.definition != null and mint.definition.name == mint_name:
+			return mint
+
+	return null

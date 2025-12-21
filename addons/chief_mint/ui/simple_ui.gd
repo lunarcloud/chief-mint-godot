@@ -27,9 +27,14 @@ func notify(res: ChiefMintResource) -> void:
 		push_warning("Notified about null mint")
 		return
 
+	# Remove any existing notification for this achievement (keep only the latest state)
+	for i in range(_notification_queue.size() - 1, -1, -1):
+		if _notification_queue[i].definition.name == res.definition.name:
+			_notification_queue.remove_at(i)
+
 	# Add the achievement to the queue
 	_notification_queue.append(res)
-	
+
 	# Start processing the queue if not already displaying
 	if not _is_displaying:
 		_process_queue()
@@ -37,10 +42,10 @@ func notify(res: ChiefMintResource) -> void:
 
 func _process_queue() -> void:
 	_is_displaying = true
-	
+
 	while _notification_queue.size() > 0:
 		var res: ChiefMintResource = _notification_queue.pop_front()
-		
+
 		# Update UI with the current achievement
 		name_label.text = res.definition.name
 		description_label.text = res.definition.description
@@ -52,10 +57,10 @@ func _process_queue() -> void:
 		progressbar.visible = res.progress.maximum > 1
 		progressbar.max_value = res.progress.maximum
 		progressbar.value = res.progress.current
-		
+
 		# Display the achievement
 		await _show()
-	
+
 	_is_displaying = false
 
 
