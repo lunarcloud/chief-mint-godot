@@ -25,7 +25,7 @@ source/local_source_location="user://chiefmints.tres"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/chief_mint/plugin.cfg")
+enabled=PackedStringArray("res://addons/chief_mint/plugin.cfg", "res://addons/gut/plugin.cfg")
 
 [gui]
 

@@ -1,0 +1,61 @@
+name: Run Unit Tests
+
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Run GUT Unit Tests
+    permissions:
+      contents: read
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Godot
+      uses: chickensoft-games/setup-godot@v2
+      with:
+        version: 4.5.0
+        use-dotnet: false
+
+    - name: Verify Godot Installation
+      run: |
+        godot --version
+
+    - name: Import Project Assets
+      run: |
+        echo "Importing project assets..."
+        godot --headless --import --quit 2>&1 | tee import.log
+        echo "Import completed"
+
+    - name: Run Unit Tests
+      run: |
+        echo "Running GUT unit tests..."
+        godot --headless -s addons/gut/gut_cmdln.gd 2>&1 | tee test.log
+        # Check if tests passed (exit code 0) or failed
+        if [ ${PIPESTATUS[0]} -ne 0 ]; then
+          echo "::error::Unit tests failed"
+          cat test.log
+          exit 1
+        fi
+        # Check for test failures in output
+        if grep -q "failing tests" test.log; then
+          echo "::error::Some tests failed"
+          cat test.log
+          exit 1
+        fi
+        echo "All tests passed successfully"
+
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: test.log
+        retention-days: 30
