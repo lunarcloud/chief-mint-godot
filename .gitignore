@@ -14,6 +14,10 @@ export_presets.cfg
 data_*/
 mono_crash.*.json
 
+# Test results and temporary test files
+.gut_editor_config.json
+user://test_*.tres
+
 # builds
 [Bb]uild/
 
