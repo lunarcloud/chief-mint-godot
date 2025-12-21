@@ -1,5 +1,6 @@
-tool
-class_name ChiefMintEditorDefinitionRow, "res://addons/chief_mint/icon/icon.svg"
+@tool
+@icon("res://addons/chief_mint/icon/icon.svg")
+class_name ChiefMintEditorDefinitionRow
 extends Panel
 ## Mint Definition Row
 ## The UI for a single Mint in the editor UI
@@ -8,7 +9,7 @@ signal definition_changed(definition, has_changes)
 
 signal definition_removed(definition)
 
-export(Resource) var definition setget set_definition
+@export var definition: Resource: set = set_definition
 var unedited: Resource
 
 var name_edit: LineEdit
@@ -35,17 +36,24 @@ func _enter_tree():
 	icon_display = $HBoxContainer/IconContainer/ImageDisplay/ImageTexture
 	changes_label = $HBoxContainer/InfoContainer/TopRightArea/ChangesLabel
 
+	# Populate RarityOptions in Godot 4
+	if rarity_options.get_item_count() == 0:
+		rarity_options.clear()
+		rarity_options.add_icon_item(load("res://addons/chief_mint/icon/rarity/common.png"), "")
+		rarity_options.add_icon_item(load("res://addons/chief_mint/icon/rarity/uncommon.png"), "")
+		rarity_options.add_icon_item(load("res://addons/chief_mint/icon/rarity/rare.png"), "")
+
 
 func set_editor_scale(value: float) -> void:
-	rect_min_size *= value
-	$HBoxContainer/InfoContainer/TopRightArea/CompletionRarity.rect_min_size *= value
-	$HBoxContainer/InfoContainer/TopRightArea/RarityOptions.rect_min_size *= value
-	$HBoxContainer/InfoContainer/TopRightArea/SubtractButton.rect_min_size *= value
-	$HBoxContainer/IconContainer/ImageDisplay.rect_min_size *= value
+	custom_minimum_size *= value
+	$HBoxContainer/InfoContainer/TopRightArea/CompletionRarity.custom_minimum_size *= value
+	$HBoxContainer/InfoContainer/TopRightArea/RarityOptions.custom_minimum_size *= value
+	$HBoxContainer/InfoContainer/TopRightArea/SubtractButton.custom_minimum_size *= value
+	$HBoxContainer/IconContainer/ImageDisplay.custom_minimum_size *= value
 
 
 func _on_SubtractButton_pressed():
-	emit_signal("definition_removed", definition)
+	definition_removed.emit(definition)
 	call_deferred("queue_free")
 
 
@@ -68,15 +76,14 @@ func set_definition(def: ChiefMintDefinitionResource) -> void:
 		description_text_edit.text = def.description
 
 	if is_instance_valid(icon_display) and def.icon != null:
-		var texture = ImageTexture.new()
-		texture.create_from_image(def.icon)
+		var texture = ImageTexture.create_from_image(def.icon)
 		icon_display.texture = texture
 
 	if is_instance_valid(max_progress_spin_box):
 		max_progress_spin_box.value = def.maximum_progress
 
 	if is_instance_valid(partial_progress_check_box):
-		partial_progress_check_box.pressed = def.display_partial_progress
+		partial_progress_check_box.button_pressed = def.display_partial_progress
 
 	if is_instance_valid(rarity_completion) and is_instance_valid(rarity_options):
 		rarity_completion.visible = (
@@ -86,7 +93,9 @@ func set_definition(def: ChiefMintDefinitionResource) -> void:
 		rarity_options.visible = not rarity_completion.visible
 
 		if def.rarity < ChiefMintDefinitionResource.ChiefMintRarity.COMPLETION:
-			rarity_options.select(def.rarity)
+			# Only select if the OptionButton has items
+			if rarity_options.get_item_count() > def.rarity:
+				rarity_options.select(def.rarity)
 		else:
 			$HBoxContainer/InfoContainer/MaxProgressLabel.visible = false
 			max_progress_spin_box.visible = false
@@ -106,7 +115,7 @@ func _mark_changed() -> void:
 	var has_changes = diffs.size() > 0
 
 	changes_label.visible_characters = 0 if not has_changes else 1
-	emit_signal("definition_changed", unedited, has_changes)
+	definition_changed.emit(unedited, has_changes)
 	#print(str("editing result, diffs:", diffs))
 
 
@@ -144,12 +153,10 @@ func _on_ImageFileDialog_file_selected(path):
 	if not ResourceLoader.exists(path):
 		return
 
-	var image = Image.new()
-	image.load(path)
+	var image = Image.load_from_file(path)
 	definition.icon = image
 
-	var texture = ImageTexture.new()
-	texture.create_from_image(image)
+	var texture = ImageTexture.create_from_image(image)
 	icon_display.texture = texture
 
 	_mark_changed()

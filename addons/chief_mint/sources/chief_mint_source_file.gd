@@ -65,7 +65,7 @@ static func create_save_from_definitions(
 
 func _save() -> bool:
 	#print("Trying to save {f}".format({'f': save_path}))
-	var err = ResourceSaver.save(save_path, stored_data)
+	var err = ResourceSaver.save(stored_data, save_path)
 	if err == OK:
 		#print("Saved {f}".format({'f': save_path}))
 		return true
@@ -81,6 +81,7 @@ func increment_progress(name: String) -> ChiefMintResource:
 		elif mint.definition.name == name:
 			mint.progress.current += 1
 			_save()
+			_check_completion_achievements()
 			return mint
 	return null
 
@@ -90,8 +91,39 @@ func set_progress(name: String, value) -> ChiefMintResource:
 		if mint.definition.name == name:
 			mint.progress.current = value
 			_save()
+			_check_completion_achievements()
 			return mint
 	return null
+
+
+## Check if all non-completion achievements are complete and trigger completion achievements
+func _check_completion_achievements() -> void:
+	if stored_data == null:
+		return
+
+	# Find all completion achievements and non-completion achievements
+	var completion_mints = []
+	var non_completion_mints = []
+
+	for mint in stored_data.mints:
+		if mint.definition != null:
+			if mint.definition.rarity == ChiefMintDefinitionResource.ChiefMintRarity.COMPLETION:
+				completion_mints.append(mint)
+			else:
+				non_completion_mints.append(mint)
+
+	# Check if all non-completion achievements are complete
+	var all_complete = true
+	for mint in non_completion_mints:
+		if not mint.progress.is_complete():
+			all_complete = false
+			break
+
+	# If all non-completion achievements are complete, complete all completion achievements
+	if all_complete:
+		for mint in completion_mints:
+			mint.progress.current = mint.progress.maximum
+		_save()
 
 
 func is_complete(name: String) -> bool:

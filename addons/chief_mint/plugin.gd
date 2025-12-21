@@ -1,11 +1,18 @@
-tool
-class_name ChiefMintPlugin, "res://addons/chief_mint/icon/icon-small-grey.png"
+@tool
+class_name ChiefMintPlugin
 extends EditorPlugin
 
-const Icon = preload("res://addons/chief_mint/icon/icon-small-grey.png")
 const MainPanel = preload("res://addons/chief_mint/editor/plugin_main_panel.tscn")
 
+# Load icon lazily after import
+var icon: Texture2D
+
 var main_panel_instance
+
+func _get_icon() -> Texture2D:
+	if not icon:
+		icon = load("res://addons/chief_mint/icon/icon-small-grey.png")
+	return icon
 
 
 func _define_project_setting(
@@ -17,14 +24,13 @@ func _define_project_setting(
 ) -> void:
 	# p_default_val can be any type!!
 
-	var property_info: Dictionary = {
-		"name": p_name, "type": p_type, "hint": p_hint, "hint_string": p_hint_string
-	}
-
-	ProjectSettings.add_property_info(property_info)
-	ProjectSettings.set_initial_value(p_name, p_default_val)
 	if not ProjectSettings.has_setting(p_name):
 		ProjectSettings.set_setting(p_name, p_default_val)
+		var property_info: Dictionary = {
+			"name": p_name, "type": p_type, "hint": p_hint, "hint_string": p_hint_string
+		}
+		ProjectSettings.add_property_info(property_info)
+		ProjectSettings.set_initial_value(p_name, p_default_val)
 
 
 func _enter_tree():
@@ -58,11 +64,11 @@ func _enter_tree():
 	# Registers the ChiefMint node as an autoloaded singleton.
 	add_autoload_singleton("ChiefMint", "res://addons/chief_mint/chief_mint_singleton.gd")
 
-	main_panel_instance = MainPanel.instance()
+	main_panel_instance = MainPanel.instantiate()
 	# Add the main panel to the editor's main viewport.
-	get_editor_interface().get_editor_viewport().add_child(main_panel_instance)
+	get_editor_interface().get_editor_main_screen().add_child(main_panel_instance)
 	# Hide the main panel. Very much required.
-	make_visible(false)
+	_make_visible(false)
 
 	# Allow UI components to adjust accordingly with editor scaling
 	var scale = get_editor_interface().get_editor_scale()
@@ -88,18 +94,18 @@ func _exit_tree():
 	print("Chief Mint Plugin disabled")
 
 
-func has_main_screen():
+func _has_main_screen():
 	return true
 
 
-func make_visible(visible):
+func _make_visible(visible):
 	if main_panel_instance:
 		main_panel_instance.visible = visible
 
 
-func get_plugin_name():
+func _get_plugin_name():
 	return "ChiefMint"
 
 
-func get_plugin_icon() -> Texture:
-	return Icon
+func _get_plugin_icon() -> Texture2D:
+	return _get_icon()

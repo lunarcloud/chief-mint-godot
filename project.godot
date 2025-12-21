@@ -6,83 +6,7 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
-
-_global_script_classes=[ {
-"base": "Reference",
-"class": "ChiefMintConstants",
-"language": "GDScript",
-"path": "res://addons/chief_mint/chief_mint_constants.gd"
-}, {
-"base": "Resource",
-"class": "ChiefMintDefinitionResource",
-"language": "GDScript",
-"path": "res://addons/chief_mint/resources/chief_mint_definition.gd"
-}, {
-"base": "Resource",
-"class": "ChiefMintDefinitionsResource",
-"language": "GDScript",
-"path": "res://addons/chief_mint/resources/chief_mint_definitions_resource.gd"
-}, {
-"base": "Panel",
-"class": "ChiefMintEditorDefinitionRow",
-"language": "GDScript",
-"path": "res://addons/chief_mint/editor/definition_row.gd"
-}, {
-"base": "EditorPlugin",
-"class": "ChiefMintPlugin",
-"language": "GDScript",
-"path": "res://addons/chief_mint/plugin.gd"
-}, {
-"base": "Resource",
-"class": "ChiefMintProgress",
-"language": "GDScript",
-"path": "res://addons/chief_mint/resources/chief_mint_progress.gd"
-}, {
-"base": "Resource",
-"class": "ChiefMintResource",
-"language": "GDScript",
-"path": "res://addons/chief_mint/resources/chief_mint_resource.gd"
-}, {
-"base": "Resource",
-"class": "ChiefMintSaveResource",
-"language": "GDScript",
-"path": "res://addons/chief_mint/resources/chief_mints_save_resource.gd"
-}, {
-"base": "Control",
-"class": "ChiefMintSimpleUi",
-"language": "GDScript",
-"path": "res://addons/chief_mint/ui/simple_ui.gd"
-}, {
-"base": "Node",
-"class": "ChiefMintSingleton",
-"language": "GDScript",
-"path": "res://addons/chief_mint/chief_mint_singleton.gd"
-}, {
-"base": "Node",
-"class": "ChiefMintSource",
-"language": "GDScript",
-"path": "res://addons/chief_mint/sources/chief_mint_source.gd"
-}, {
-"base": "ChiefMintSource",
-"class": "ChiefMintSourceFile",
-"language": "GDScript",
-"path": "res://addons/chief_mint/sources/chief_mint_source_file.gd"
-} ]
-_global_script_class_icons={
-"ChiefMintConstants": "",
-"ChiefMintDefinitionResource": "res://addons/chief_mint/icon/icon.svg",
-"ChiefMintDefinitionsResource": "res://addons/chief_mint/icon/icon.svg",
-"ChiefMintEditorDefinitionRow": "res://addons/chief_mint/icon/icon.svg",
-"ChiefMintPlugin": "res://addons/chief_mint/icon/icon-small-grey.png",
-"ChiefMintProgress": "res://addons/chief_mint/icon/icon.svg",
-"ChiefMintResource": "res://addons/chief_mint/icon/icon.svg",
-"ChiefMintSaveResource": "res://addons/chief_mint/icon/icon.svg",
-"ChiefMintSimpleUi": "",
-"ChiefMintSingleton": "",
-"ChiefMintSource": "",
-"ChiefMintSourceFile": ""
-}
+config_version=5
 
 [application]
 
@@ -101,7 +25,7 @@ source/local_source_location="user://chiefmints.tres"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/chief_mint/plugin.cfg" )
+enabled=PackedStringArray("res://addons/chief_mint/plugin.cfg")
 
 [gui]
 
@@ -117,7 +41,5 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-quality/driver/driver_name="GLES2"
-vram_compression/import_etc=true
-vram_compression/import_etc2=false
-environment/default_environment="res://default_env.tres"
+renderer/rendering_method="gl_compatibility"
+environment/defaults/default_environment="res://default_env.tres"

@@ -3,7 +3,7 @@ extends Control
 ## Simple button-driven scene that increments acheivements and receives
 ## notifications via the standard simple UI.
 
-onready var chief_mints : ChiefMintSingleton = $"/root/ChiefMint"
+@onready var chief_mints : ChiefMintSingleton = $"/root/ChiefMint"
 
 
 func _on_RareEventButton_pressed():

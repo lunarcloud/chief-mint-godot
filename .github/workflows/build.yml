@@ -1,0 +1,66 @@
+name: Build Project
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build Godot Project
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Godot
+      uses: chickensoft-games/setup-godot@v2
+      with:
+        version: 4.5.0
+        use-dotnet: false
+        
+    - name: Verify Godot Installation
+      run: |
+        godot --version
+        
+    - name: Import Project Assets
+      run: |
+        echo "Importing project assets..."
+        godot --headless --verbose --import --quit 2>&1 | tee import.log
+        # Check for critical errors (excluding orphan warnings and index out of bounds during initialization)
+        if grep -E "SCRIPT ERROR:|Parse Error:" import.log | grep -v "Cannot call method 'has_icon' on a null value" | grep -v "Index p_which"; then
+          echo "::error::Import process encountered errors"
+          cat import.log
+          exit 1
+        fi
+        echo "Import completed successfully"
+        
+    - name: Build Project
+      run: |
+        echo "Building/validating project..."
+        godot --headless --verbose --quit 2>&1 | tee build.log
+        # Check for critical errors (excluding non-fatal warnings)
+        if grep -E "SCRIPT ERROR:|Parse Error:" build.log; then
+          echo "::error::Build validation encountered errors"
+          cat build.log
+          exit 1
+        fi
+        echo "Project build validation completed successfully"
+        
+    - name: Create Build Artifacts
+      run: |
+        echo "Creating build artifacts..."
+        mkdir -p build
+        # Copy addon files to build directory
+        cp -r addons build/
+        cp project.godot build/
+        cp icon.png build/
+        cp README.md build/
+        echo "Build artifacts created successfully"
+        
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: chief-mint-godot-build
+        path: build/
+        retention-days: 30

@@ -32,7 +32,7 @@ func init_resource_from_def(def: ChiefMintDefinitionResource) -> ChiefMintResour
 func load_from_source() -> void:
 	if source != null:
 		state = source.load_saved()
-		emit_signal("loaded_from_source")
+		loaded_from_source.emit()
 
 
 ## Reset progress (optional for source to implement)
@@ -52,7 +52,7 @@ func increment_progress(name: String) -> void:
 		var resource = source.increment_progress(name)
 		var changed = old_progress != resource.progress.current
 		if changed:
-			emit_signal("progress_changed", resource)
+			progress_changed.emit(resource)
 
 
 ## Force the progress of a mint to a specific value (optional for source to implement)
@@ -62,7 +62,7 @@ func set_progress(name: String, value) -> void:
 		var resource = source.set_progress(name, value)
 		var changed = old_progress != resource.progress.current
 		if changed:
-			emit_signal("progress_changed", resource)
+			progress_changed.emit(resource)
 
 
 ## Get whether the mint is considered achieved
