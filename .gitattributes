@@ -7,5 +7,4 @@
 /addons/chief_mint 				!export-ignore
 /addons/chief_mint/**/* 	!export-ignore
 
-# Exclude .github folder from exports (CI/CD configuration should not be in exported assets)
 /.github								export-ignore
