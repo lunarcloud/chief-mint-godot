@@ -69,7 +69,7 @@ func _show(seconds: float = display_time):
 	animation_player.play("Show")
 	await animation_player.animation_finished
 	await get_tree().create_timer(seconds).timeout
-	_hide(id)
+	await _hide(id)
 
 
 func _hide(id: int) -> void:
