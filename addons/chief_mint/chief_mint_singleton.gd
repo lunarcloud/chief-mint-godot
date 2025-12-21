@@ -60,8 +60,13 @@ func increment_progress(name: String) -> void:
 
 			# Check for newly completed completion achievements
 			var completion_achievements_after = _get_incomplete_completion_achievements()
+			# Convert to dictionary for O(1) lookup
+			var after_dict = {}
+			for mint_name in completion_achievements_after:
+				after_dict[mint_name] = true
+
 			for mint_name in completion_achievements_before:
-				if mint_name not in completion_achievements_after:
+				if not after_dict.has(mint_name):
 					# This completion achievement just became complete
 					var completed_mint = _get_mint_by_name(mint_name)
 					if completed_mint != null:
@@ -95,13 +100,12 @@ func _get_incomplete_completion_achievements() -> Array[String]:
 		return incomplete
 
 	for mint in state.mints:
-		var is_completion = (
+		var is_completion_rarity = (
 			mint.definition != null
 			and mint.definition.rarity == ChiefMintDefinitionResource.ChiefMintRarity.COMPLETION
 		)
-		if is_completion:
-			if not mint.progress.is_complete():
-				incomplete.append(mint.definition.name)
+		if is_completion_rarity and not mint.progress.is_complete():
+			incomplete.append(mint.definition.name)
 
 	return incomplete
 
