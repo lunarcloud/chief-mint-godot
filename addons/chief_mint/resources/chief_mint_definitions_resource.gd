@@ -1,9 +1,9 @@
-class_name ChiefMintDefinitionsResource, "res://addons/chief_mint/icon/icon.svg"
+class_name ChiefMintDefinitionsResource
 extends Resource
 ## Chief Mint Definitions Resource
 ## List of mint definitions
 
-export(Array, Resource) var definitions: Array
+@export var definitions: Array[Resource]
 
 
 func _init():

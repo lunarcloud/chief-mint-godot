@@ -1,5 +1,5 @@
-tool
-class_name ChiefMintEditorDefinitionRow, "res://addons/chief_mint/icon/icon.svg"
+@tool
+class_name ChiefMintEditorDefinitionRow
 extends Panel
 ## Mint Definition Row
 ## The UI for a single Mint in the editor UI
@@ -8,7 +8,7 @@ signal definition_changed(definition, has_changes)
 
 signal definition_removed(definition)
 
-export(Resource) var definition setget set_definition
+@export var definition: Resource: set = set_definition
 var unedited: Resource
 
 var name_edit: LineEdit
@@ -37,11 +37,11 @@ func _enter_tree():
 
 
 func set_editor_scale(value: float) -> void:
-	rect_min_size *= value
-	$HBoxContainer/InfoContainer/TopRightArea/CompletionRarity.rect_min_size *= value
-	$HBoxContainer/InfoContainer/TopRightArea/RarityOptions.rect_min_size *= value
-	$HBoxContainer/InfoContainer/TopRightArea/SubtractButton.rect_min_size *= value
-	$HBoxContainer/IconContainer/ImageDisplay.rect_min_size *= value
+	custom_minimum_size *= value
+	$HBoxContainer/InfoContainer/TopRightArea/CompletionRarity.custom_minimum_size *= value
+	$HBoxContainer/InfoContainer/TopRightArea/RarityOptions.custom_minimum_size *= value
+	$HBoxContainer/InfoContainer/TopRightArea/SubtractButton.custom_minimum_size *= value
+	$HBoxContainer/IconContainer/ImageDisplay.custom_minimum_size *= value
 
 
 func _on_SubtractButton_pressed():
@@ -68,8 +68,7 @@ func set_definition(def: ChiefMintDefinitionResource) -> void:
 		description_text_edit.text = def.description
 
 	if is_instance_valid(icon_display) and def.icon != null:
-		var texture = ImageTexture.new()
-		texture.create_from_image(def.icon)
+		var texture = ImageTexture.create_from_image(def.icon)
 		icon_display.texture = texture
 
 	if is_instance_valid(max_progress_spin_box):
@@ -144,12 +143,10 @@ func _on_ImageFileDialog_file_selected(path):
 	if not ResourceLoader.exists(path):
 		return
 
-	var image = Image.new()
-	image.load(path)
+	var image = Image.load_from_file(path)
 	definition.icon = image
 
-	var texture = ImageTexture.new()
-	texture.create_from_image(image)
+	var texture = ImageTexture.create_from_image(image)
 	icon_display.texture = texture
 
 	_mark_changed()

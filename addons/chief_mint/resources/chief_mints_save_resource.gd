@@ -1,10 +1,10 @@
-class_name ChiefMintSaveResource, "res://addons/chief_mint/icon/icon.svg"
+class_name ChiefMintSaveResource
 extends Resource
 ## Chief Mint Save Resource
 ## A list of chief mints resources (definition and progress)
 
 # Array<ChiefMintResource>
-export(Array, Resource) var mints: Array
+@export var mints: Array[Resource]
 
 
 func _init():

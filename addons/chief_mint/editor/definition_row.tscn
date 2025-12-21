@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource path="res://addons/chief_mint/editor/definition_row.gd" type="Script" id=1]
 [ext_resource path="res://addons/chief_mint/resources/chief_mint_definition.gd" type="Script" id=2]
@@ -11,7 +11,7 @@
 
 [sub_resource type="Resource" id=3]
 resource_name = "Chief Mint Definition Resource"
-script = ExtResource( 2 )
+script = ExtResource("2")
 name = ""
 description = ""
 maximum_progress = 1
@@ -22,19 +22,19 @@ rarity = 0
 
 [node name="ChiefMintDefinitionRow" type="Panel"]
 anchor_right = 1.0
-margin_bottom = 320.0
-rect_min_size = Vector2( 240, 320 )
+offset_bottom = 320.0
+custom_minimum_size = Vector2( 240, 320 )
 size_flags_horizontal = 3
-script = ExtResource( 1 )
-definition = SubResource( 3 )
+script = ExtResource("1")
+definition = SubResource("3")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 6.0
-margin_top = 6.0
-margin_right = -6.0
-margin_bottom = -6.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -6.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0, 0, 0, 0.117647 )
@@ -42,92 +42,92 @@ color = Color( 0, 0, 0, 0.117647 )
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 6.0
-margin_top = 6.0
-margin_right = -6.0
-margin_bottom = -6.0
-rect_min_size = Vector2( 440, 320 )
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -6.0
+custom_minimum_size = Vector2( 440, 320 )
 size_flags_horizontal = 3
 size_flags_vertical = 11
 custom_constants/separation = 8
 
 [node name="IconContainer" type="VBoxContainer" parent="HBoxContainer"]
-margin_right = 256.0
-margin_bottom = 320.0
-rect_min_size = Vector2( 256, 320 )
+offset_right = 256.0
+offset_bottom = 320.0
+custom_minimum_size = Vector2( 256, 320 )
 
 [node name="ImageDisplay" type="ColorRect" parent="HBoxContainer/IconContainer"]
-margin_right = 256.0
-margin_bottom = 256.0
-rect_min_size = Vector2( 256, 256 )
+offset_right = 256.0
+offset_bottom = 256.0
+custom_minimum_size = Vector2( 256, 256 )
 color = Color( 0.454902, 0.454902, 0.454902, 0.439216 )
 
 [node name="ImageTexture" type="TextureRect" parent="HBoxContainer/IconContainer/ImageDisplay"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_min_size = Vector2( 128, 128 )
+custom_minimum_size = Vector2( 128, 128 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = SubResource( 2 )
+texture = SubResource("2")
 stretch_mode = 6
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/IconContainer"]
-margin_top = 260.0
-margin_right = 256.0
-margin_bottom = 280.0
+offset_top = 260.0
+offset_right = 256.0
+offset_bottom = 280.0
 
 [node name="ImageChangeButton" type="Button" parent="HBoxContainer/IconContainer/HBoxContainer"]
-margin_right = 208.0
-margin_bottom = 20.0
+offset_right = 208.0
+offset_bottom = 20.0
 size_flags_horizontal = 3
 text = "Set Image"
 
 [node name="ImageClearButton" type="Button" parent="HBoxContainer/IconContainer/HBoxContainer"]
-margin_left = 212.0
-margin_right = 256.0
-margin_bottom = 20.0
+offset_left = 212.0
+offset_right = 256.0
+offset_bottom = 20.0
 text = "Clear"
 
 [node name="InfoContainer" type="VBoxContainer" parent="HBoxContainer"]
-margin_left = 264.0
-margin_right = 1012.0
-margin_bottom = 320.0
-rect_min_size = Vector2( 120, 320 )
+offset_left = 264.0
+offset_right = 1012.0
+offset_bottom = 320.0
+custom_minimum_size = Vector2( 120, 320 )
 size_flags_horizontal = 3
 
 [node name="TopRightArea" type="HBoxContainer" parent="HBoxContainer/InfoContainer"]
-margin_right = 748.0
-margin_bottom = 42.0
-rect_min_size = Vector2( 26, 26 )
+offset_right = 748.0
+offset_bottom = 42.0
+custom_minimum_size = Vector2( 26, 26 )
 size_flags_horizontal = 3
 size_flags_vertical = 0
 alignment = 1
 
 [node name="CompletionRarity" type="TextureRect" parent="HBoxContainer/InfoContainer/TopRightArea"]
 visible = false
-margin_right = 52.0
-margin_bottom = 42.0
-rect_min_size = Vector2( 52, 42 )
+offset_right = 52.0
+offset_bottom = 42.0
+custom_minimum_size = Vector2( 52, 42 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource( 7 )
+texture = ExtResource("7")
 expand = true
 stretch_mode = 6
 
 [node name="RarityOptions" type="OptionButton" parent="HBoxContainer/InfoContainer/TopRightArea"]
-margin_right = 52.0
-margin_bottom = 42.0
-rect_min_size = Vector2( 52, 42 )
+offset_right = 52.0
+offset_bottom = 42.0
+custom_minimum_size = Vector2( 52, 42 )
 size_flags_vertical = 3
-icon = ExtResource( 5 )
+icon = ExtResource("5")
 expand_icon = true
-items = [ "", ExtResource( 5 ), false, 0, null, "", ExtResource( 6 ), false, 1, null, "", ExtResource( 8 ), false, 2, null ]
+items = [ "", ExtResource("5"), false, 0, null, "", ExtResource("6"), false, 1, null, "", ExtResource("8"), false, 2, null ]
 selected = 0
 
 [node name="ChangesLabel" type="Label" parent="HBoxContainer/InfoContainer/TopRightArea"]
-margin_left = 56.0
-margin_right = 86.0
-margin_bottom = 42.0
+offset_left = 56.0
+offset_right = 86.0
+offset_bottom = 42.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
 text = "*"
@@ -137,79 +137,79 @@ uppercase = true
 percent_visible = 0.0
 
 [node name="Control" type="Control" parent="HBoxContainer/InfoContainer/TopRightArea"]
-margin_left = 90.0
-margin_right = 696.0
-margin_bottom = 42.0
+offset_left = 90.0
+offset_right = 696.0
+offset_bottom = 42.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 20.0
 
 [node name="SubtractButton" type="Button" parent="HBoxContainer/InfoContainer/TopRightArea"]
-margin_left = 700.0
-margin_right = 748.0
-margin_bottom = 42.0
-rect_min_size = Vector2( 48, 32 )
+offset_left = 700.0
+offset_right = 748.0
+offset_bottom = 42.0
+custom_minimum_size = Vector2( 48, 32 )
 size_flags_horizontal = 0
-icon = ExtResource( 4 )
+icon = ExtResource("4")
 icon_align = 1
 expand_icon = true
-script = ExtResource( 3 )
+script = ExtResource("3")
 editor_theme_icon = "Remove"
 
 [node name="NameLabel" type="Label" parent="HBoxContainer/InfoContainer"]
-margin_top = 46.0
-margin_right = 748.0
-margin_bottom = 60.0
+offset_top = 46.0
+offset_right = 748.0
+offset_bottom = 60.0
 text = "Name"
 
 [node name="NameEdit" type="LineEdit" parent="HBoxContainer/InfoContainer"]
-margin_top = 64.0
-margin_right = 748.0
-margin_bottom = 88.0
+offset_top = 64.0
+offset_right = 748.0
+offset_bottom = 88.0
 
 [node name="MaxProgressLabel" type="Label" parent="HBoxContainer/InfoContainer"]
-margin_top = 92.0
-margin_right = 748.0
-margin_bottom = 106.0
+offset_top = 92.0
+offset_right = 748.0
+offset_bottom = 106.0
 text = "Max Progress"
 
 [node name="MaxProgressSpinBox" type="SpinBox" parent="HBoxContainer/InfoContainer"]
-margin_top = 110.0
-margin_right = 748.0
-margin_bottom = 134.0
+offset_top = 110.0
+offset_right = 748.0
+offset_bottom = 134.0
 min_value = 1.0
 max_value = 255.0
 value = 1.0
 align = 2
 
 [node name="DescriptionLabel" type="Label" parent="HBoxContainer/InfoContainer"]
-margin_top = 138.0
-margin_right = 748.0
-margin_bottom = 152.0
+offset_top = 138.0
+offset_right = 748.0
+offset_bottom = 152.0
 text = "Description"
 
 [node name="DescriptionTextEdit" type="TextEdit" parent="HBoxContainer/InfoContainer"]
-margin_top = 156.0
-margin_right = 748.0
-margin_bottom = 276.0
-rect_min_size = Vector2( 240, 120 )
+offset_top = 156.0
+offset_right = 748.0
+offset_bottom = 276.0
+custom_minimum_size = Vector2( 240, 120 )
 size_flags_horizontal = 3
 
 [node name="PartialProgressCheckBox" type="CheckBox" parent="HBoxContainer/InfoContainer"]
-margin_top = 280.0
-margin_right = 748.0
-margin_bottom = 304.0
+offset_top = 280.0
+offset_right = 748.0
+offset_bottom = 304.0
 text = "Show Partial Progress"
 
 [node name="ImageFileDialog" type="FileDialog" parent="."]
-margin_left = 282.0
-margin_top = 120.0
-margin_right = 970.0
-margin_bottom = 521.0
-rect_min_size = Vector2( 300, 105 )
+offset_left = 282.0
+offset_top = 120.0
+offset_right = 970.0
+offset_bottom = 521.0
+custom_minimum_size = Vector2( 300, 105 )
 window_title = "Open a File"
 resizable = true
 mode = 0
-filters = PoolStringArray( "*.png", "*.svg" )
+filters = PackedStringArray( "*.png", "*.svg" )
 
 [connection signal="pressed" from="HBoxContainer/IconContainer/HBoxContainer/ImageChangeButton" to="." method="_on_ImageChangeButton_pressed"]
 [connection signal="pressed" from="HBoxContainer/IconContainer/HBoxContainer/ImageClearButton" to="." method="_on_ImageClearButton_pressed"]

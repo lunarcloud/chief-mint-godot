@@ -1,10 +1,10 @@
-class_name ChiefMintProgress, "res://addons/chief_mint/icon/icon.svg"
+class_name ChiefMintProgress
 extends Resource
 ## Chief Mint Progress Resource
 ## The current and max progress that has been made towards an achievement
 
-export var current: int
-export var maximum: int
+@export var current: int
+@export var maximum: int
 
 
 func _init():

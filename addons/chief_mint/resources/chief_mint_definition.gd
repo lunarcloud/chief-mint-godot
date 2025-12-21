@@ -1,4 +1,4 @@
-class_name ChiefMintDefinitionResource, "res://addons/chief_mint/icon/icon.svg"
+class_name ChiefMintDefinitionResource
 extends Resource
 ## Chief Mint Definition Resource
 ## Resource that contains the information for an achievement (but not it's current progress)
@@ -6,17 +6,17 @@ extends Resource
 ## Rarity Levels for a Mint
 enum ChiefMintRarity { COMMON = 0, UNCOMMON = 1, RARE = 2, COMPLETION = 3 }
 
-export var name: String
+@export var name: String
 
-export var description: String
+@export var description: String
 
-export var icon: Image
+@export var icon: Image
 
-export(int, 1, 255, 1) var maximum_progress: int = 1
+@export_range(1, 255, 1) var maximum_progress: int = 1
 
-export var display_partial_progress: bool = true
+@export var display_partial_progress: bool = true
 
-export(int, "Common", "Uncommon", "Rare", "Completion") var rarity := ChiefMintRarity.COMMON
+@export_enum("Common", "Uncommon", "Rare", "Completion") var rarity: int = ChiefMintRarity.COMMON
 
 
 func _init():

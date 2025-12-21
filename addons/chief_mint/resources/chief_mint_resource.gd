@@ -1,10 +1,10 @@
-class_name ChiefMintResource, "res://addons/chief_mint/icon/icon.svg"
+class_name ChiefMintResource
 extends Resource
 ## Chief Mint Resource
 ## The definition and current progress
 
-export(Resource) var definition: Resource  #: ChiefMintDefinitionResource
-export(Resource) var progress: Resource  #: ChiefMintProgress
+@export var definition: Resource  #: ChiefMintDefinitionResource
+@export var progress: Resource  #: ChiefMintProgress
 
 
 func _init():
