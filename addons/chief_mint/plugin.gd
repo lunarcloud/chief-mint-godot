@@ -68,7 +68,7 @@ func _enter_tree():
 	# Add the main panel to the editor's main viewport.
 	get_editor_interface().get_editor_main_screen().add_child(main_panel_instance)
 	# Hide the main panel. Very much required.
-	make_visible(false)
+	_make_visible(false)
 
 	# Allow UI components to adjust accordingly with editor scaling
 	var scale = get_editor_interface().get_editor_scale()
@@ -94,18 +94,18 @@ func _exit_tree():
 	print("Chief Mint Plugin disabled")
 
 
-func has_main_screen():
+func _has_main_screen():
 	return true
 
 
-func make_visible(visible):
+func _make_visible(visible):
 	if main_panel_instance:
 		main_panel_instance.visible = visible
 
 
-func get_plugin_name():
+func _get_plugin_name():
 	return "ChiefMint"
 
 
-func get_plugin_icon() -> Texture:
+func _get_plugin_icon() -> Texture2D:
 	return _get_icon()
