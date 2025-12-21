@@ -1,3 +1,4 @@
+@icon("res://addons/chief_mint/icon/icon.svg")
 class_name ChiefMintDefinitionsResource
 extends Resource
 ## Chief Mint Definitions Resource

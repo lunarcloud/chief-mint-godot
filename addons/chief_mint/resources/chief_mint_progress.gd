@@ -1,3 +1,4 @@
+@icon("res://addons/chief_mint/icon/icon.svg")
 class_name ChiefMintProgress
 extends Resource
 ## Chief Mint Progress Resource

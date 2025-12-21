@@ -1,4 +1,5 @@
 @tool
+@icon("res://addons/chief_mint/icon/icon.svg")
 class_name ChiefMintEditorDefinitionRow
 extends Panel
 ## Mint Definition Row
