@@ -11,6 +11,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     name: Run GUT Unit Tests
+    permissions:
+      contents: read
 
     steps:
     - name: Checkout code
