@@ -1,6 +1,7 @@
 extends GutTest
 ## Unit tests for ChiefMintSaveResource
 
+
 func test_initialization():
 	var save = ChiefMintSaveResource.new()
 	assert_not_null(save, "Save resource should be created")
@@ -19,12 +20,12 @@ func test_can_store_mints_array():
 	var def1 = ChiefMintDefinitionResource.new()
 	def1.name = "Achievement 1"
 	mint1.definition = def1
-	
+
 	var mint2 = ChiefMintResource.new()
 	var def2 = ChiefMintDefinitionResource.new()
 	def2.name = "Achievement 2"
 	mint2.definition = def2
-	
+
 	var mints_array: Array[Resource] = []
 	mints_array.append(mint1)
 	mints_array.append(mint2)

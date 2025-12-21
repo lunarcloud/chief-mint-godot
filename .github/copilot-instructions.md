@@ -46,6 +46,9 @@ This is a Godot 3 add-on for defining, tracking, and displaying in-game achievem
 - Test with demo scenes in `demo_scene/`
 - Verify editor functionality in the Godot editor
 - Test achievement progression and unlocking
+- **Always run gdlint before committing**: `gdlint addons/chief_mint/**/*.gd test/*.gd`
+- Use `gdformat` to auto-fix formatting issues: `gdformat addons/chief_mint/**/*.gd test/*.gd`
+- Run unit tests with GUT: `godot --path . --headless -s addons/gut/gut_cmdln.gd` (after importing with `godot --path . --headless --import`)
 
 ## Architecture Notes
 - The plugin uses a source-based architecture where different platforms can be supported by extending `ChiefMintSource`

@@ -1,6 +1,7 @@
 extends GutTest
 ## Unit tests for ChiefMintResource
 
+
 func test_initialization():
 	var resource = ChiefMintResource.new()
 	assert_not_null(resource, "Resource should be created")
@@ -17,7 +18,7 @@ func test_can_store_definition():
 	var resource = ChiefMintResource.new()
 	var definition = ChiefMintDefinitionResource.new()
 	definition.name = "Test Achievement"
-	
+
 	resource.definition = definition
 	assert_not_null(resource.definition, "Should store definition")
 	assert_eq(resource.definition.name, "Test Achievement", "Should correctly store definition")
@@ -28,7 +29,7 @@ func test_can_store_progress():
 	var progress = ChiefMintProgress.new()
 	progress.current = 5
 	progress.maximum = 10
-	
+
 	resource.progress = progress
 	assert_not_null(resource.progress, "Should store progress")
 	assert_eq(resource.progress.current, 5, "Should correctly store progress current")

@@ -20,10 +20,10 @@ func _ready():
 	if source == null:
 		push_error("ChiefMint: Failed to initialize source. Achievement system will not function.")
 		return
-	
+
 	# Connect to completion achievement signal
 	source.completion_achievement_unlocked.connect(_on_completion_achievement_unlocked)
-	
+
 	load_from_source()
 
 
@@ -40,7 +40,7 @@ func load_from_source() -> void:
 	if source == null:
 		push_error("ChiefMint: Cannot load from source - source is null")
 		return
-	
+
 	state = source.load_saved()
 	loaded_from_source.emit()
 
@@ -66,13 +66,13 @@ func increment_progress(name: String) -> void:
 	if source == null:
 		push_error("ChiefMint: Cannot increment progress - source is null")
 		return
-	
+
 	if !is_complete(name):
 		var progress = source.get_progress(name)
 		if progress == null:
 			push_error("ChiefMint: Cannot increment progress - achievement '%s' not found" % name)
 			return
-		
+
 		var old_progress: int = progress.current
 		var resource = source.increment_progress(name)
 		var changed = old_progress != resource.progress.current
@@ -85,12 +85,12 @@ func set_progress(name: String, value) -> void:
 	if source == null:
 		push_error("ChiefMint: Cannot set progress - source is null")
 		return
-	
+
 	var progress = source.get_progress(name)
 	if progress == null:
 		push_error("ChiefMint: Cannot set progress - achievement '%s' not found" % name)
 		return
-	
+
 	var old_progress: int = progress.current
 	var resource = source.set_progress(name, value)
 	var changed = old_progress != resource.progress.current
@@ -111,7 +111,13 @@ func get_progress(name: String) -> ChiefMintProgress:
 	if source == null:
 		push_error("ChiefMint: Cannot get progress - source is null")
 		return ChiefMintProgress.new()
-	return source.get_progress(name)
+
+	var progress = source.get_progress(name)
+	if progress == null:
+		push_error("ChiefMint: Cannot get progress - achievement '%s' not found" % name)
+		return ChiefMintProgress.new()
+
+	return progress
 
 
 ## Handle completion achievement unlocked signal from source

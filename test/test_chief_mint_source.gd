@@ -53,5 +53,8 @@ func test_get_progress_returns_empty_progress():
 
 
 func test_has_completion_achievement_unlocked_signal():
-	assert_has_signal(source, "completion_achievement_unlocked", 
-		"Should have completion_achievement_unlocked signal")
+	assert_has_signal(
+		source,
+		"completion_achievement_unlocked",
+		"Should have completion_achievement_unlocked signal"
+	)

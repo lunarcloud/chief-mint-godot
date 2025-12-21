@@ -1,6 +1,7 @@
 extends GutTest
 ## Unit tests for ChiefMintProgress
 
+
 func test_is_complete_when_current_equals_maximum():
 	var progress = ChiefMintProgress.new()
 	progress.current = 5
@@ -32,10 +33,15 @@ func test_is_not_complete_when_current_is_zero():
 func test_initialization():
 	var progress = ChiefMintProgress.new()
 	assert_not_null(progress, "Progress should be created")
-	assert_eq(progress.resource_name, "Chief Mint Progress Resource", "Should have correct resource name")
+	assert_eq(
+		progress.resource_name, "Chief Mint Progress Resource", "Should have correct resource name"
+	)
 
 
 func test_is_class_identifies_correctly():
 	var progress = ChiefMintProgress.new()
-	assert_true(progress.is_class("ChiefMintProgressResource"), "Should identify as ChiefMintProgressResource")
+	assert_true(
+		progress.is_class("ChiefMintProgressResource"),
+		"Should identify as ChiefMintProgressResource"
+	)
 	assert_true(progress.is_class("Resource"), "Should identify as Resource")
