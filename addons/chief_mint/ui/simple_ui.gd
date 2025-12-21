@@ -32,8 +32,33 @@ func notify(res: ChiefMintResource) -> void:
 		if _notification_queue[i].definition.name == res.definition.name:
 			_notification_queue.remove_at(i)
 
-	# Add the achievement to the queue
-	_notification_queue.append(res)
+	# Check if this is a completion achievement
+	var is_completion = (
+		res.definition != null
+		and res.definition.rarity == ChiefMintDefinitionResource.ChiefMintRarity.COMPLETION
+	)
+
+	if is_completion:
+		# Completion achievements always go to the end of the queue
+		_notification_queue.append(res)
+	else:
+		# Regular achievements: insert before any completion achievement
+		var completion_index = -1
+		for i in range(_notification_queue.size()):
+			var queue_item = _notification_queue[i]
+			var is_completion_in_queue = (
+				queue_item.definition.rarity == ChiefMintDefinitionResource.ChiefMintRarity.COMPLETION
+			)
+			if is_completion_in_queue:
+				completion_index = i
+				break
+
+		if completion_index >= 0:
+			# Insert before the completion achievement
+			_notification_queue.insert(completion_index, res)
+		else:
+			# No completion achievement in queue, just append
+			_notification_queue.append(res)
 
 	# Start processing the queue if not already displaying
 	if not _is_displaying:
