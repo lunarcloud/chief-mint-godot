@@ -1,0 +1,30 @@
+name: GDScript Lint
+
+on:
+  push:
+
+jobs:
+  gdlint:
+    runs-on: ubuntu-latest
+    name: Lint GDScript files
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+        
+    - name: Install gdtoolkit
+      run: |
+        python -m pip install --upgrade pip
+        pip install setuptools
+        pip install "gdtoolkit>=3.0,<4.0"
+        
+    - name: Run gdlint
+      run: |
+        # Find all .gd files and run gdlint on them, excluding third-party addons
+        find . -name "*.gd" -type f ! -path "./.godot/*" ! -path "./.git/*" ! -path "./addons/editor_icon_previewer/*" -print0 | xargs -0 gdlint
+        echo "GDScript linting completed successfully"
