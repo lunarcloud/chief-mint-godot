@@ -1,78 +1,73 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://byny2a7f71bi7"]
 
-[ext_resource path="res://demo_scene/demo.gd" type="Script" id=1]
-[ext_resource path="res://addons/chief_mint/ui/simple_ui.tscn" type="PackedScene" id=2]
+[ext_resource type="Script" uid="uid://dgkffwslutday" path="res://demo_scene/demo.gd" id="1"]
+[ext_resource type="PackedScene" path="res://addons/chief_mint/ui/simple_ui.tscn" id="2"]
 
 [node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("1")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Container" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -314.0
-offset_top = -190.0
-offset_right = -24.0
-offset_bottom = 190.0
-custom_constants/separation = 24
+offset_left = -135.0
+offset_top = -66.0
+offset_right = 171.0
+offset_bottom = 67.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 16
+columns = 2
 
-[node name="RareEventButton" type="Button" parent="VBoxContainer"]
-offset_right = 290.0
-offset_bottom = 58.0
+[node name="RareEventButton" type="Button" parent="Container"]
+layout_mode = 2
 size_flags_vertical = 3
 text = "Rare Event"
 
-[node name="HatTrickProgressButton" type="Button" parent="VBoxContainer"]
-offset_top = 82.0
-offset_right = 290.0
-offset_bottom = 140.0
+[node name="HatTrickProgressButton" type="Button" parent="Container"]
+layout_mode = 2
 size_flags_vertical = 3
 text = "Hat Trick Progress"
 
-[node name="CommonEventButton" type="Button" parent="VBoxContainer"]
-offset_top = 164.0
-offset_right = 290.0
-offset_bottom = 222.0
+[node name="CommonEventButton" type="Button" parent="Container"]
+layout_mode = 2
 size_flags_vertical = 3
 text = "Common Event"
 
-[node name="ClearLocalButton" type="Button" parent="VBoxContainer"]
-offset_top = 246.0
-offset_right = 290.0
-offset_bottom = 305.0
+[node name="ClearLocalButton" type="Button" parent="Container"]
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Clear Local Progress"
-
-[node name="TriggerMultipleButton" type="Button" parent="VBoxContainer"]
-offset_top = 329.0
-offset_right = 290.0
-offset_bottom = 388.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Trigger Multiple (Test Queue)"
+text = "Erase (Local) Progress"
 
 [node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.25
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.25
-offset_left = -134.0
-offset_top = -95.0
-offset_right = 136.0
-offset_bottom = -6.0
+anchor_bottom = 0.5
+offset_left = -133.0
+offset_top = -214.0
+offset_right = 137.0
+offset_bottom = -125.0
 text = "Push Buttons to emulate 
 gameplay actions"
 horizontal_alignment = 1
-valign = 1
+vertical_alignment = 1
 
 [node name="ChiefMintSimpleUi" parent="." instance=ExtResource("2")]
+anchors_preset = 0
 
-[connection signal="pressed" from="VBoxContainer/RareEventButton" to="." method="_on_RareEventButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/HatTrickProgressButton" to="." method="_on_HatTrickProgressButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/CommonEventButton" to="." method="_on_CommonEventButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/ClearLocalButton" to="." method="_on_ClearLocalButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/TriggerMultipleButton" to="." method="_on_TriggerMultipleButton_pressed"]
+[connection signal="pressed" from="Container/RareEventButton" to="." method="_on_RareEventButton_pressed"]
+[connection signal="pressed" from="Container/HatTrickProgressButton" to="." method="_on_HatTrickProgressButton_pressed"]
+[connection signal="pressed" from="Container/CommonEventButton" to="." method="_on_CommonEventButton_pressed"]
+[connection signal="pressed" from="Container/ClearLocalButton" to="." method="_on_ClearLocalButton_pressed"]

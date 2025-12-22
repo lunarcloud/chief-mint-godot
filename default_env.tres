@@ -1,6 +1,6 @@
-[gd_resource type="Environment" load_steps=2 format=3]
+[gd_resource type="Environment" load_steps=2 format=3 uid="uid://ch1fw11q56q8f"]
 
-[sub_resource type="Sky" id=1]
+[sub_resource type="Sky" id="1"]
 
 [resource]
 background_mode = 2

@@ -12,6 +12,7 @@ config_version=5
 
 config/name="Chief Mint Plugin Demo"
 run/main_scene="res://demo_scene/demo.tscn"
+config/features=PackedStringArray("4.5")
 config/icon="res://icon.png"
 
 [autoload]
