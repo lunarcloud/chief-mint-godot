@@ -11,9 +11,9 @@ var source: ChiefMintSource
 
 
 func _ready():
-	var source_path = ProjectSettings.get_setting(ChiefMintConstants.MINT_SOURCE_SETTING)
+	var source_path = _get_source_script_path()
 	if source_path == null or not ResourceLoader.exists(source_path):
-		source = load(ChiefMintConstants.MINT_SOURCE_DEFAULT).new()
+		source = load(ChiefMintConstants.MINT_SOURCE_FILE_SCRIPT).new()
 	else:
 		source = load(source_path).new()
 
@@ -25,6 +25,20 @@ func _ready():
 	source.completion_achievement_unlocked.connect(_on_completion_achievement_unlocked)
 
 	load_from_source()
+
+
+## Resolve the source script path from the "Source" and "Other Source" project settings
+func _get_source_script_path() -> String:
+	var source_type = ProjectSettings.get_setting(
+		ChiefMintConstants.MINT_SOURCE_TYPE_SETTING, ChiefMintConstants.MINT_SOURCE_TYPE_DEFAULT
+	)
+	match source_type:
+		ChiefMintConstants.SourceType.GODOT_STEAM:
+			return ChiefMintConstants.MINT_SOURCE_STEAM_SCRIPT
+		ChiefMintConstants.SourceType.OTHER:
+			return ProjectSettings.get_setting(ChiefMintConstants.MINT_SOURCE_OTHER_SETTING, "")
+		_:
+			return ChiefMintConstants.MINT_SOURCE_FILE_SCRIPT
 
 
 ## Create a Mint Resource from Definition

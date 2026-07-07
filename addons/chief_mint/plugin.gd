@@ -43,13 +43,22 @@ func _enter_tree():
 		ChiefMintConstants.MINT_DEFINITION_DEFAULT
 	)
 
-	# Add Main Definitions File to the project settings
+	# Add Source (achievement storage backend) to the project settings
 	_define_project_setting(
-		ChiefMintConstants.MINT_SOURCE_SETTING,
+		ChiefMintConstants.MINT_SOURCE_TYPE_SETTING,
+		TYPE_INT,
+		PROPERTY_HINT_ENUM,
+		ChiefMintConstants.MINT_SOURCE_TYPE_HINT_STRING,
+		ChiefMintConstants.MINT_SOURCE_TYPE_DEFAULT
+	)
+
+	# Add Other Source Script to the project settings, used when Source is "Other"
+	_define_project_setting(
+		ChiefMintConstants.MINT_SOURCE_OTHER_SETTING,
 		TYPE_STRING,
 		PROPERTY_HINT_FILE,
 		"chief_mint_source_*.gd",
-		ChiefMintConstants.MINT_SOURCE_DEFAULT
+		ChiefMintConstants.MINT_SOURCE_OTHER_DEFAULT
 	)
 
 	# Add Local Storage path to the project settings
