@@ -6,7 +6,7 @@ This Godot 4.5+ add-on helps you define, track, and display in-game achievements
 
 "Local File Storage" achievements are good for an self-distributed or Itch release, where there is no platform-native system.
 
-Other platforms, such as Steam, should be easy to implement (Pull-Requests welcomed) - you just need to extend "ChiefMintSource".
+An untested [GodotSteam](https://codeberg.org/godotsteam/godotsteam) source is included at `addons/chief_mint/sources/chief_mint_source_steam.gd`, read the documentation in that script for more.
 
 ## Testing
 
