@@ -15,11 +15,15 @@ func _init():
 		def_path = ChiefMintConstants.MINT_DEFINITION_DEFAULT
 
 	save_path = ProjectSettings.get_setting(ChiefMintConstants.MINT_SOURCE_LOCAL_PATH_SETTING)
+	var is_new_save_path := false
 	if save_path == null:
 		save_path = ChiefMintConstants.MINT_SOURCE_LOCAL_PATH_DEFAULT
-		_save()
+		is_new_save_path = true
 
 	load_saved()
+
+	if is_new_save_path:
+		_save()
 
 
 func get_source_name() -> String:
