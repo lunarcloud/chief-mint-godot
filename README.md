@@ -2,7 +2,7 @@
 
 ![Addon Icon](icon.png)
 
-This Godot 4.5+ add-on helps you define, track, and display in-game achievements.
+This Godot 4.7+ add-on helps you define, track, and display in-game achievements.
 
 "Local File Storage" achievements are good for an self-distributed or Itch release, where there is no platform-native system.
 

@@ -13,7 +13,7 @@ func _init():
 
 
 # Add support for is_class
-func is_class(name: String) -> bool:
+func is_class(name: StringName) -> bool:
 	return name == "ChiefMintProgressResource" or super.is_class(name)
 
 
